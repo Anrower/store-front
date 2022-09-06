@@ -1,0 +1,14 @@
+@import './normalize/variables';
+@import './normalize/vertical-rhythm';
+@import './normalize/normalize-mixin';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+}

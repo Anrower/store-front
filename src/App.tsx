@@ -1,10 +1,13 @@
-import './App.css';
+import './App.scss';
 import Category from './pages/Category/Category';
 
 function App() {
 
   return (
-    <Category />
+    <div className='app'>
+      <Category />
+    </div>
+
   );
 }
 

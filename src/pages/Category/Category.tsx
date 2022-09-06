@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
 import { ICategoryData } from '../../models/ICategoryData';
-// import './category.scss'
+import './category.scss';
 
 const GET_CATEGORIES = gql`
    query categories { 
@@ -17,9 +17,11 @@ const GET_CATEGORIES = gql`
 const Category = () => {
   const { loading, error, data } = useQuery<ICategoryData>(GET_CATEGORIES);
 
+  const category = 'All'
+
   return (
-    <div>
-      <h3>Available Category</h3>
+    <div >
+      <h3 className='category__title'>{`${category}`}</h3>
       {loading ? (<p>Loading ...</p>)
         : error ? (<p>Error: something goes wrong</p>)
           :
