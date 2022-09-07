@@ -1,0 +1,29 @@
+.cart {
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__count {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    z-index: 2;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+}

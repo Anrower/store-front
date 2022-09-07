@@ -1,0 +1,39 @@
+.header {
+  padding: 24px 100px 0;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__card-container {
+    display: flex;
+    gap: 22px;
+  }
+
+  &__navigation {
+
+    &-list {
+      display: flex;
+      font-family: 'Raleway', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 120%;
+      text-transform: uppercase;
+      color: #1D1F22;
+
+      &-item {
+        padding: 4px 16px 30px;
+      }
+
+      &-item.active {
+        color: #5ECE7B;
+        border-bottom: 2px solid #5ECE7B;
+      }
+    }
+
+  }
+
+}

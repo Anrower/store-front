@@ -1,11 +1,16 @@
 import './App.scss';
-import Category from './pages/Category/Category';
+import CategoryPage from './pages/Category/CategoryPage';
+import { Routes, Route } from "react-router-dom";
+import Header from './components/header/Header';
 
 function App() {
 
   return (
     <div className='app'>
-      <Category />
+      <Header />
+      <Routes>
+        <Route path="/" element={<CategoryPage />} />
+      </Routes>
     </div>
 
   );
