@@ -1,6 +1,5 @@
-import { ICurrency } from "./ICurrency";
+import { ICurrencySymbol } from "./ICurrencySymbol";
 export interface IDropdownItem {
-  id: number;
-  title: string;
-  value: ICurrency;
+  label: string;
+  symbol: ICurrencySymbol;
 }

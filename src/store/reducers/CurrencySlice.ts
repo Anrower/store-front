@@ -1,8 +1,8 @@
-import { ICurrency } from './../../models/ICurrency';
+import { ICurrencySymbol } from '../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CurrencyState {
-  current: ICurrency;
+  current: ICurrencySymbol;
 };
 
 const initialState: CurrencyState = {
@@ -13,7 +13,7 @@ export const currencySlice = createSlice({
   name: 'currency',
   initialState,
   reducers: {
-    currencyChange(state, action: PayloadAction<ICurrency>) {
+    currencyChange(state, action: PayloadAction<ICurrencySymbol>) {
       state.current = action.payload;
     },
   }

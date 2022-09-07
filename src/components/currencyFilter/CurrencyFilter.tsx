@@ -1,32 +1,38 @@
 import Dropdown from '../dropdown/Dropdown';
 import { useAppSelector } from '../../hooks/redux';
 import { IDropdownItem } from '../../models/IDropdownItem';
-import './cashFilter.scss';
+import './currencyFilter.scss';
 
-const CashFilter = () => {
+const CurrencyFilter = () => {
+
   const items: IDropdownItem[] = [{
-    id: 1,
-    title: 'USD',
-    value: '$'
+    label: "USD",
+    symbol: "$"
   },
   {
-    id: 2,
-    title: 'EUR',
-    value: '€'
+    label: "GBP",
+    symbol: "£"
   },
   {
-    id: 3,
-    title: 'JPY',
-    value: '¥'
+    label: "AUD",
+    symbol: "A$"
+  },
+  {
+    label: "JPY",
+    symbol: "¥"
+  },
+  {
+    label: "RUB",
+    symbol: "₽"
   }]
 
   const currency = useAppSelector(state => state.currencyReducer.current)
 
   return (
-    <div className='cash-filter'>
+    <div className='currency-filter'>
       <Dropdown currency={currency} items={items} />
     </div>
   )
 }
 
-export default CashFilter
+export default CurrencyFilter

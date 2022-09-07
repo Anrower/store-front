@@ -14,12 +14,20 @@ export const GET_CATEGORIES = gql`
 
 export const GET_BY_CATEGORY = gql`
   query categories($input: CategoryInput) { 
-    category(input: $input) {
-      products {
-        id
-        brand
-        category
+    category (input: $input) {
+    products {
+      id
+      brand
+      gallery
+      name
+      prices {
+        amount
+        currency {
+          label
+          symbol
+        }
       }
     }
+  }
   }
 `;

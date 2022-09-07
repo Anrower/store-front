@@ -1,8 +1,19 @@
 .category {
-  color: white;
+  padding: 80px 100px 200px;
 
   &__title {
-    background-color: red;
-    font-size: 22px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 160%;
+    color: #1D1F22;
+  }
+
+  &__content {
+    margin: 100px auto 90px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
   }
 }

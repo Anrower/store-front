@@ -1,7 +1,7 @@
 import './header.scss';
 import logo from '../../images/logo.svg'
 import Cart from '../cart/Cart';
-import CashFilter from '../cashFilter/CashFilter';
+import CurrencyFilter from '../currencyFilter/CurrencyFilter';
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
         </nav>
         <img className='header__logo' src={logo} alt="Logo" />
         <div className='header__card-container'>
-          <CashFilter />
+          <CurrencyFilter />
           <Cart />
         </div>
       </div>

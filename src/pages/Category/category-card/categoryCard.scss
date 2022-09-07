@@ -1,0 +1,33 @@
+.categoryCard {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  gap: 24px;
+
+  &__image-wrapper {
+    width: 354px;
+    height: 330px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__description {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-size: 18px;
+    line-height: 160%;
+    color: #1D1F22;
+
+    &-title {
+      font-weight: 300;
+    }
+
+    &-price {
+      font-weight: 500;
+    }
+  }
+
+
+}
