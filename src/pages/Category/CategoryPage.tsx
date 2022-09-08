@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { ICategoryData } from '../../models/ICategoryData';
-import { IProduct } from '../../models/IProduct';
 import './category.scss';
 import { GET_CATEGORIES, GET_BY_CATEGORY } from '../../query/query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CategoryCard from './category-card/CategoryCard';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { updateProductsData } from '../../store/reducers/ProductSlice';
 
 
 
@@ -12,15 +13,16 @@ const Category = () => {
   // const { loading, error, data } = useQuery<ICategoryData>(GET_CATEGORIES, {
   //   variables: {},
   // });
+  const { products } = useAppSelector(store => store.productReducer);
+  const dispatch = useAppDispatch();
   const obj = { title: "clothes" }
   const { loading, error, data } = useQuery<ICategoryData>(GET_BY_CATEGORY, {
     variables: { input: obj },
   });
-  const [products, setProducts] = useState<IProduct[]>();
 
   useEffect(() => {
-    if (!loading) {
-      setProducts(data?.category.products)
+    if (!loading && data) {
+      dispatch(updateProductsData(data.category.products))
     }
   }, [data])
 
@@ -30,10 +32,15 @@ const Category = () => {
       <div className='category__content'>
         {products ?
           products.map(i => (<CategoryCard key={i.id} product={i} />
-            // <p>{i.id}</p>
-            // <p>{i.brand}</p>
-            // <p>{i.category}</p>
-          )) : <h1>Spinner...</h1>
+          )) : null
+        }
+        {products ?
+          products.map(i => (<CategoryCard key={i.id} product={i} />
+          )) : null
+        }
+        {products ?
+          products.map(i => (<CategoryCard key={i.id} product={i} />
+          )) : null
         }
       </div>
     </div>

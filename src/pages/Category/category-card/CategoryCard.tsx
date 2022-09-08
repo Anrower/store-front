@@ -1,5 +1,6 @@
 import './categoryCard.scss'
 import { IProduct } from '../../../models/IProduct';
+import { useAppSelector } from '../../../hooks/redux';
 
 interface IProps {
   product: IProduct
@@ -7,6 +8,7 @@ interface IProps {
 
 const CategoryCard = (props: IProps) => {
   const { product } = props;
+  const { currencyIndex } = useAppSelector(store => store.currencyReducer)
 
   return (
     <div className='categoryCard'>
@@ -16,8 +18,8 @@ const CategoryCard = (props: IProps) => {
       <div className='categoryCard__description'>
         <p className='categoryCard__description-title'>{product.name}</p>
         <p className='categoryCard__description-price'>
-          <span>{product.prices[0].currency.symbol}</span>
-          {product.prices[0].amount}</p>
+          <span>{product.prices[currencyIndex].currency.symbol}</span>
+          {product.prices[currencyIndex].amount}</p>
       </div>
     </div>
   )

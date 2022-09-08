@@ -20,11 +20,12 @@ const CurrencyFilter = () => {
       const arr = [];
       const temp = data.categories[0].products[0].prices
       for (let i = 0; i < temp.length; i++) {
-        arr.push(temp[i].currency)
+        arr.push(temp[i].currency);
       }
       dispatch(updateCurrencyList(arr))
     }
   }, [data])
+
 
 
   return (

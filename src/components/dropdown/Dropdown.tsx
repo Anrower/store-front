@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
-import { changeCurrentCurrency } from '../../store/reducers/CurrencySlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { changeCurrentCurrency, updateCurrencyIndex } from '../../store/reducers/CurrencySlice';
 import { ICurrencySymbol } from '../../models/ICurrencySymbol';
 import { ICurrency } from '../../models/ICurrency';
 import './dropdown.scss';
@@ -18,8 +18,9 @@ const Dropdown = (props: IDdProps) => {
 
   const toggle = () => setOpen(!open);
   const handleClick = (item: ICurrencySymbol) => {
-    dispatch(changeCurrentCurrency(item))
-    console.log(item);
+    const CurrencyIndex = currencyList.findIndex(value => value.symbol === item);
+    dispatch(changeCurrentCurrency(item));
+    dispatch(updateCurrencyIndex(CurrencyIndex));
     toggle();
   }
   return (

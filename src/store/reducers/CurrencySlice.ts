@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface CurrencyState {
   current: ICurrencySymbol;
   currencyList: ICurrency[];
+  currencyIndex: number;
 };
 
 const initialState: CurrencyState = {
@@ -20,7 +21,8 @@ const initialState: CurrencyState = {
   {
     label: "JPY",
     symbol: "¥"
-  }]
+  }],
+  currencyIndex: 0,
 };
 
 export const currencySlice = createSlice({
@@ -33,10 +35,15 @@ export const currencySlice = createSlice({
     updateCurrencyList(state, action: PayloadAction<ICurrency[]>) {
       state.currencyList = action.payload;
     },
+    updateCurrencyIndex(state, action: PayloadAction<number>) {
+      state.currencyIndex = action.payload
+    }
   }
 });
 
 export default currencySlice.reducer;
 export const {
-  changeCurrentCurrency, updateCurrencyList,
+  changeCurrentCurrency,
+  updateCurrencyList,
+  updateCurrencyIndex,
 } = currencySlice.actions;

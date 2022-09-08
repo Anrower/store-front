@@ -3,6 +3,15 @@
   padding: 16px;
   flex-direction: column;
   gap: 24px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, .3);
+  transition: all .3s;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    box-shadow: 4px 4px 40px rgba(1, 1, 1, .5);
+  }
 
   &__image-wrapper {
     width: 354px;
@@ -10,11 +19,6 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    // align-items: flex-start;
-  }
-
-  &-image {
-    // transform: scale(0.7, 0.7);
   }
 
   &__description {

@@ -3,38 +3,23 @@ import { IProduct } from "../../models/IProduct";
 
 interface ProductState {
   products?: IProduct[];
-  isLoading: boolean;
-  error: string;
 };
 
 const initialState: ProductState = {
   products: [],
-  isLoading: false,
-  error: '',
 };
 
 export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    productsFetching(state) {
-      state.isLoading = true;
-    },
-    productsFetchingSuccess(state, action: PayloadAction<IProduct[] | undefined>) {
-      state.isLoading = false;
-      state.error = '';
+    updateProductsData(state, action: PayloadAction<IProduct[]>) {
       state.products = action.payload
     },
-    productsFetchingError(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.error = action.payload;
-    }
   }
 });
 
 export default productSlice.reducer;
 export const {
-  productsFetching,
-  productsFetchingSuccess,
-  productsFetchingError
+  updateProductsData,
 } = productSlice.actions;
