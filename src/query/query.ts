@@ -31,3 +31,19 @@ export const GET_BY_CATEGORY = gql`
   }
   }
 `;
+
+
+export const GET_CURRENCY = gql`
+  query currency {
+    categories {
+      products {
+        prices {
+          currency {
+            label
+            symbol
+          }
+        }
+      }
+    }
+  }
+`

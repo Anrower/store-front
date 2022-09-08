@@ -4,5 +4,5 @@ export interface IAttributeSet {
   id: string
   name?: string
   type?: string
-  items: [IAttribute]
+  items: IAttribute[]
 }

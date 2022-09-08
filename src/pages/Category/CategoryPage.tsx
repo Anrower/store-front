@@ -19,7 +19,6 @@ const Category = () => {
   const [products, setProducts] = useState<IProduct[]>();
 
   useEffect(() => {
-    console.log(data);
     if (!loading) {
       setProducts(data?.category.products)
     }

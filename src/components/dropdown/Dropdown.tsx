@@ -1,23 +1,24 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { currencyChange } from '../../store/reducers/CurrencySlice';
-import { IDropdownItem } from '../../models/IDropdownItem';
+import { useAppDispatch } from '../../hooks/redux';
+import { changeCurrentCurrency } from '../../store/reducers/CurrencySlice';
 import { ICurrencySymbol } from '../../models/ICurrencySymbol';
+import { ICurrency } from '../../models/ICurrency';
 import './dropdown.scss';
 
 interface IDdProps {
-  currency: string
-  items: IDropdownItem[]
+  currentCurrency: ICurrencySymbol;
+  currencyList: ICurrency[];
 }
 
 const Dropdown = (props: IDdProps) => {
-  const { currency, items } = props;
+
+  const { currentCurrency, currencyList } = props;
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch()
 
   const toggle = () => setOpen(!open);
   const handleClick = (item: ICurrencySymbol) => {
-    dispatch(currencyChange(item))
+    dispatch(changeCurrentCurrency(item))
     console.log(item);
     toggle();
   }
@@ -30,14 +31,14 @@ const Dropdown = (props: IDdProps) => {
         onClick={() => toggle()}
       >
         <div className='dd-header__title'>
-          <p className='dd-header__title_current'>{currency}</p>
+          <p className='dd-header__title_current'>{currentCurrency}</p>
           <p className='dd-header__title_action'>
             {open ? "\u02C4" : '\u02C5'}</p>
         </div>
       </div>
       {open && (
         <ul className='dd-list'>
-          {items.map(item => (
+          {currencyList?.map(item => (
             <li className='dd-list-item' key={item.label}>
               <button onClick={() => handleClick(item.symbol)}>
                 <span>{item.symbol}</span>
