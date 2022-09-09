@@ -7,6 +7,7 @@ export interface IProduct {
   gallery: string[]
   description: string
   category: string
+  inStock: boolean
   attributes: IAttributeSet[]
   prices: IPrice[]
   brand: string

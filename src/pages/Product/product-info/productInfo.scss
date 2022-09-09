@@ -1,0 +1,89 @@
+.product__info {
+  display: flex;
+  align-items: flex-start;
+  gap: 100px;
+
+  &__image-wrapper {
+    width: 610px;
+    height: 511px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__about {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Raleway';
+    color: #1D1F22;
+    font-size: 30px;
+    line-height: 27px;
+
+    &-brand {
+      font-weight: 600;
+    }
+
+    &-name {
+      margin-top: 16px;
+      font-weight: 400;
+    }
+
+    &-attributes {
+      margin-top: 40px;
+    }
+
+    &-button {
+      margin-top: 20px;
+    }
+
+    &-description {
+      margin-top: 40px;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 159.96%;
+    }
+  }
+}
+
+.attributes-type {
+  display: flex;
+  gap: 12px;
+
+  &-name {
+    margin-top: 24px;
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    color: #1D1F22;
+  }
+
+  &-item {
+    padding: 5px;
+    margin-top: 21px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: #292929;
+    justify-content: center;
+    height: 45px;
+    width: 62px;
+    border: 1px solid #292929;
+  }
+
+  &-item.color {
+    width: 32px;
+    height: 32px;
+    border: none;
+  }
+
+}

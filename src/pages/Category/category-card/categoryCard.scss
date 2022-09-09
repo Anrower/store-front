@@ -1,16 +1,24 @@
 .categoryCard {
+  position: relative;
   display: flex;
   padding: 16px;
-  flex-direction: column;
+  justify-content: center;
   gap: 24px;
   border-radius: 10px;
-  box-shadow: 3px 3px 20px rgba(0, 0, 0, .3);
+  box-shadow: (0px 4px 35px rgba(168, 172, 176, 0.19));
   transition: all .3s;
 
   &:hover,
   &:focus {
     cursor: pointer;
-    box-shadow: 4px 4px 40px rgba(1, 1, 1, .5);
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, .3);
+
+  }
+
+  &__wrapper {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
   }
 
   &__image-wrapper {
@@ -19,6 +27,19 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
+  }
+
+  &__image_sold-out {
+    top: 162px;
+    position: absolute;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 160%;
+    align-self: center;
+    color: #8D8F9A;
+    z-index: 5;
   }
 
   &__description {

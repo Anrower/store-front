@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { ICategoryData } from '../../models/ICategoryData';
-import './category.scss';
-import { GET_CATEGORIES, GET_BY_CATEGORY } from '../../query/query';
+import './categoryPage.scss';
+import { GET_BY_CATEGORY } from '../../query/query';
 import { useEffect } from 'react';
 import CategoryCard from './category-card/CategoryCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -10,18 +10,15 @@ import { updateProductsData } from '../../store/reducers/ProductSlice';
 
 
 const Category = () => {
-  // const { loading, error, data } = useQuery<ICategoryData>(GET_CATEGORIES, {
-  //   variables: {},
-  // });
   const { products } = useAppSelector(store => store.productReducer);
   const dispatch = useAppDispatch();
-  const obj = { title: "clothes" }
+  const obj = { title: "all" }
   const { loading, error, data } = useQuery<ICategoryData>(GET_BY_CATEGORY, {
     variables: { input: obj },
   });
 
   useEffect(() => {
-    if (!loading && data) {
+    if (!loading && !error && data) {
       dispatch(updateProductsData(data.category.products))
     }
   }, [data])
@@ -30,14 +27,6 @@ const Category = () => {
     <div className='category'>
       <h3 className='category__title'>{`${obj.title}`}</h3>
       <div className='category__content'>
-        {products ?
-          products.map(i => (<CategoryCard key={i.id} product={i} />
-          )) : null
-        }
-        {products ?
-          products.map(i => (<CategoryCard key={i.id} product={i} />
-          )) : null
-        }
         {products ?
           products.map(i => (<CategoryCard key={i.id} product={i} />
           )) : null

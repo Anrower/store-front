@@ -9,18 +9,18 @@ interface CurrencyState {
 };
 
 const initialState: CurrencyState = {
-  current: "$",
+  current: '$',
   currencyList: [{
-    label: "USD",
-    symbol: "$"
+    label: 'USD',
+    symbol: '$'
   },
   {
-    label: "EUR",
-    symbol: "€"
+    label: 'EUR',
+    symbol: '€'
   },
   {
-    label: "JPY",
-    symbol: "¥"
+    label: 'JPY',
+    symbol: '¥'
   }],
   currencyIndex: 0,
 };

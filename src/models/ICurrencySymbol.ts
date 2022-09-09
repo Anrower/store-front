@@ -1,1 +1,1 @@
-export type ICurrencySymbol = "$" | "€" | "¥" | "£" | "A$" | "₽";
+export type ICurrencySymbol = '$' | '€' | '¥' | '£' | 'A$' | '₽';
