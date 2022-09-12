@@ -6,19 +6,26 @@ import { useEffect } from 'react';
 import CategoryCard from './category-card/CategoryCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { updateProductsData } from '../../store/reducers/ProductSlice';
+import { useParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 
 
 const Category = () => {
+  const { categoryId } = useParams();
+  const obj = { title: "all" }
+  categoryId ? obj.title = categoryId : obj.title = 'all';
+
   const { products } = useAppSelector(store => store.productReducer);
   const dispatch = useAppDispatch();
-  const obj = { title: "all" }
+
   const { loading, error, data } = useQuery<ICategoryData>(GET_BY_CATEGORY, {
     variables: { input: obj },
   });
 
   useEffect(() => {
     if (!loading && !error && data) {
+      console.log(data.category.products);
       dispatch(updateProductsData(data.category.products))
     }
   }, [data])

@@ -13,7 +13,7 @@ const CategoryCard = (props: IProps) => {
   const { currencyIndex } = useAppSelector(store => store.currencyReducer)
 
   return (
-    <div className='categoryCard' onClick={() => navigate(`/${product.id}`)}>
+    <div className='categoryCard' onClick={() => navigate(`${product.id}`)}>
       {!product.inStock ? <span className='categoryCard__image_sold-out'>OUT OF STOCK</span> : null}
       <div style={!product.inStock ? { filter: 'opacity(60%)' } : undefined} className='categoryCard__wrapper'>
         <div className='categoryCard__image-wrapper'>

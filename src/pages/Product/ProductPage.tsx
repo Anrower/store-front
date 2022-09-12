@@ -7,19 +7,20 @@ import { IProductData } from '../../models/IProductData';
 import ProductInfo from './product-info/ProductInfo';
 
 const ProductPage = () => {
-  const { id } = useParams();
+  const { productId } = useParams();
+  console.log(productId);
 
   const [getId, { loading, data, called, error }] = useLazyQuery<IProductData>(GET_PRODUCT_BY_ID);
 
   useEffect(() => {
-    if (id) {
+    if (productId) {
       getId({
         variables: {
-          id: id
+          id: productId
         }
       })
     }
-  }, [id])
+  }, [productId])
 
   return (
     loading && called ? <p>loading...</p> :

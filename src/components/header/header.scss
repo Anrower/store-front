@@ -25,15 +25,21 @@
       color: #1D1F22;
 
       &-item {
-        padding: 4px 16px 30px;
-      }
+        &>a {
+          padding: 4px 16px 30px;
+        }
 
-      &-item.active {
-        color: #5ECE7B;
-        border-bottom: 2px solid #5ECE7B;
+        &>a.active {
+          color: #5ECE7B;
+          border-bottom: 2px solid #5ECE7B;
+        }
+
+        &>a.inactive {
+          // color: red;
+          // border-bottom: 2px solid #bbb;
+        }
+
       }
     }
-
   }
-
 }

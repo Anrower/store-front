@@ -26,19 +26,19 @@ const ProductInfo = (props: IProps) => {
 
         <div className='product__info__about-attributes'>
           {product.attributes.map(i => (
-            <div>
+            <div key={i.id}>
               <p className='attributes-type-name'>{i.id}:</p>
               {i.id === 'Color' ?
 
                 <div className='attributes-type'>
                   {i.items.map(i => (
-                    <div style={{ backgroundColor: `${i.value}` }} className='attributes-type-item color' />
+                    <div key={i.value} style={{ backgroundColor: `${i.value}` }} className='attributes-type-item color' />
                   ))}
                 </div> :
 
                 <div className='attributes-type'>
                   {i.items.map(i => (
-                    <div className='attributes-type-item'>{i.value}</div>
+                    <div key={i.value} className='attributes-type-item'>{i.value}</div>
                   ))}
                 </div>
               }
