@@ -1,6 +1,7 @@
 .product__info {
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
   gap: 100px;
 
   &__image-wrapper {
@@ -13,6 +14,7 @@
 
   &__about {
     display: flex;
+    max-width: 292px;
     flex-direction: column;
     font-family: 'Raleway';
     color: #1D1F22;
@@ -37,12 +39,25 @@
     }
 
     &-description {
+      // text-overflow: ellipsis;
+      // overflow: hidden;
       margin-top: 40px;
       font-family: 'Roboto';
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
       line-height: 159.96%;
+
+      &>p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      div>ul>li {
+        margin-top: 10px;
+      }
     }
   }
 }
@@ -52,6 +67,7 @@
   gap: 12px;
 
   &-name {
+    text-transform: uppercase;
     margin-top: 24px;
     font-family: 'Roboto Condensed';
     font-style: normal;
@@ -59,6 +75,15 @@
     font-size: 18px;
     line-height: 18px;
     color: #1D1F22;
+  }
+
+  &-price {
+    margin-top: 36px;
+
+    &-value {
+      margin-top: 20px;
+      font-size: 24px;
+    }
   }
 
   &-item {

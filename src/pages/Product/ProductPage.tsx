@@ -9,7 +9,7 @@ import ProductInfo from './product-info/ProductInfo';
 const ProductPage = () => {
   const { id } = useParams();
 
-  const [getId, { loading, error, data }] = useLazyQuery<IProductData>(GET_PRODUCT_BY_ID);
+  const [getId, { loading, data, called, error }] = useLazyQuery<IProductData>(GET_PRODUCT_BY_ID);
 
   useEffect(() => {
     if (id) {
@@ -20,24 +20,24 @@ const ProductPage = () => {
       })
     }
   }, [id])
-  const product = data?.product;
-  console.log(product?.gallery[0])
 
   return (
-    error ? <p>{error.message}</p> :
-      loading ? <p>loading...</p> :
+    loading && called ? <p>loading...</p> :
+      data ?
         <div className='product'>
           <div className='product__content'>
             <aside className='product__aside'>
               <div className='product__aside__image-wrapper'>
-                {product?.gallery.map(i => (
+                {data.product?.gallery.map(i => (
                   <img key={i} src={i} alt='product image' />
                 ))}
               </div>
             </aside>
-            <ProductInfo product={product} />
+            <ProductInfo product={data.product} />
           </div>
-        </div>
+        </div> :
+        <p>{error?.message}</p>
+
   )
 }
 
