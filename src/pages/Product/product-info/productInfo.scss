@@ -13,8 +13,8 @@
   }
 
   &__about {
+    max-width: 300px;
     display: flex;
-    max-width: 292px;
     flex-direction: column;
     font-family: 'Raleway';
     color: #1D1F22;
@@ -81,6 +81,7 @@
     margin-top: 36px;
 
     &-value {
+      font-family: 'Raleway';
       margin-top: 20px;
       font-size: 24px;
     }

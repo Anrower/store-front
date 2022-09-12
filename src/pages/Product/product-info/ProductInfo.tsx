@@ -32,7 +32,12 @@ const ProductInfo = (props: IProps) => {
 
                 <div className='attributes-type'>
                   {i.items.map(i => (
-                    <div key={i.value} style={{ backgroundColor: `${i.value}` }} className='attributes-type-item color' />
+                    <div
+                      key={i.value}
+                      style={{
+                        backgroundColor: `${i.value}`,
+                        // filter: `grayscale(40%)`
+                      }} className='attributes-type-item color' />
                   ))}
                 </div> :
 
