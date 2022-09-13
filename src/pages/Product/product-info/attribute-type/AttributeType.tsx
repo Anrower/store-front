@@ -22,9 +22,9 @@ const AttributeType = (props: IProps) => {
     selectType(event, attName);
   }
 
-  useEffect(() => {
-    dispatch(updateSelectProduct({ ...selectProudct, [attName]: attributes[0].value, [attName]: attributes[1].value }))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(updateSelectProduct({ ...selectProudct, [attName]: attributes[0].value, [attName]: attributes[1].value }))
+  // }, [])
 
 
   return (

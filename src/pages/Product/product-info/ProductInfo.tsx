@@ -7,6 +7,7 @@ import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import { ICurrencySymbol } from '../../../models/ICurrencySymbol';
 import AttributeType from './attribute-type/AttributeType';
 import { updateSelectProduct } from '../../../store/reducers/SelectProductSlice';
+import { IAttributeSet } from '../../../models/IAttributeSet';
 
 
 interface IProps {
@@ -35,6 +36,15 @@ const ProductInfo = (props: IProps) => {
 
   const currencySymbol = product.prices[currencyIndex].currency.symbol;
   const price = product.prices[currencyIndex].amount;
+  // console.log(product.attributes[1].id);
+
+  const getAllAttribute = (atr: IAttributeSet[]) => {
+    const result = [];
+    for (let i = 0; i < atr.length; i++) {
+      result.push(atr[i].id);
+    }
+    return result;
+  }
 
   const [addToCart, setAddToCart] = useState<IAddToCart>(
     {
@@ -42,22 +52,30 @@ const ProductInfo = (props: IProps) => {
       Name: product.name,
       PriceValue: product.prices[0].amount,
       PriceCurrency: product.prices[0].currency.symbol,
-      Color: product.attributes[0].items[0].value,
-      Capacity: product.attributes[0].items[0].value,
-      Size: product.attributes[0].items[0].value,
+      Color: '',
+      Capacity: '',
+      Size: '',
     }
   )
 
   useEffect(() => {
-    dispatch(updateSelectProduct({ ...addToCart, PriceCurrency: currencySymbol, PriceValue: price }));
+    dispatch(updateSelectProduct({ ...addToCart, PriceCurrency: currencySymbol, PriceValue: price, }));
   }, [addToCart, dispatch, currencySymbol, price])
+
+  useEffect(() => {
+    const attributes = getAllAttribute(product.attributes);
+    // const atributes = {}
+    for (let i = 0; i < attributes.length; i++) {
+      dispatch(updateSelectProduct({ ...addToCart, [attributes[i]]: product.attributes[i].items[0].value }));
+    }
+
+  }, [addToCart])
 
 
   const selectType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>, name: string
   ) => {
     const type = event.currentTarget.getAttribute('data-value');
-    // const obj = { ...selectProudct, ...addToCart, [name]: type }
     setAddToCart({ ...addToCart, [name]: type })
     dispatch(updateSelectProduct(addToCart))
     console.log(type);
