@@ -1,24 +1,72 @@
 import './productInfo.scss';
 import { IProduct } from '../../../models/IProduct';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
+import { ICurrencySymbol } from '../../../models/ICurrencySymbol';
+import AttributeType from './attribute-type/AttributeType';
+import { updateSelectProduct } from '../../../store/reducers/SelectProductSlice';
+
 
 interface IProps {
   product: IProduct
+  asidePicture: number
+}
+
+interface IAddToCart {
+  Id: string,
+  Name: string,
+  PriceValue: number,
+  PriceCurrency: ICurrencySymbol,
+  Color?: string,
+  Capacity?: string,
+  Size?: string
 }
 
 
 const ProductInfo = (props: IProps) => {
+  const dispatch = useAppDispatch();
+  const { selectProudct } = useAppSelector(store => store.SelectProductReducer)
   const { currencyIndex } = useAppSelector(store => store.currencyReducer)
-  const { product } = props
+  const { product, asidePicture } = props
   const wideDescription = 370;
   const description = parse(product.description);
+
+  const currencySymbol = product.prices[currencyIndex].currency.symbol;
+  const price = product.prices[currencyIndex].amount;
+
+  const [addToCart, setAddToCart] = useState<IAddToCart>(
+    {
+      Id: product.id,
+      Name: product.name,
+      PriceValue: product.prices[0].amount,
+      PriceCurrency: product.prices[0].currency.symbol,
+      Color: product.attributes[0].items[0].value,
+      Capacity: product.attributes[0].items[0].value,
+      Size: product.attributes[0].items[0].value,
+    }
+  )
+
+  useEffect(() => {
+    dispatch(updateSelectProduct({ ...addToCart, PriceCurrency: currencySymbol, PriceValue: price }));
+  }, [addToCart, dispatch, currencySymbol, price])
+
+
+  const selectType = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>, name: string
+  ) => {
+    const type = event.currentTarget.getAttribute('data-value');
+    // const obj = { ...selectProudct, ...addToCart, [name]: type }
+    setAddToCart({ ...addToCart, [name]: type })
+    dispatch(updateSelectProduct(addToCart))
+    console.log(type);
+  }
 
   return (
     <div className='product__info'>
       <div className='product__info__image-wrapper'>
-        <img src={product.gallery[0]} alt={product.name}></img>
+        <img src={product.gallery[asidePicture]} alt={product.name}></img>
       </div>
       <div className='product__info__about'>
         <h2 className='product__info__about-brand'>{product.brand}</h2>
@@ -28,25 +76,11 @@ const ProductInfo = (props: IProps) => {
           {product.attributes.map(i => (
             <div key={i.id}>
               <p className='attributes-type-name'>{i.id}:</p>
-              {i.id === 'Color' ?
-
-                <div className='attributes-type'>
-                  {i.items.map(i => (
-                    <div
-                      key={i.value}
-                      style={{
-                        backgroundColor: `${i.value}`,
-                        // filter: `grayscale(40%)`
-                      }} className='attributes-type-item color' />
-                  ))}
-                </div> :
-
-                <div className='attributes-type'>
-                  {i.items.map(i => (
-                    <div key={i.value} className='attributes-type-item'>{i.value}</div>
-                  ))}
-                </div>
-              }
+              <AttributeType
+                attName={i.id}
+                attributes={i.items}
+                selectType={selectType}
+              />
             </div>
           ))}
         </div>
@@ -54,8 +88,8 @@ const ProductInfo = (props: IProps) => {
         <div className='attributes-type-price attributes-type-name'>
           <span>price:</span>
           <p className='attributes-type-price-value'>
-            <span> {product.prices[currencyIndex].currency.symbol}</span>
-            {product.prices[currencyIndex].amount}
+            <span>{currencySymbol}</span>
+            {price}
           </p>
         </div>
         <div className='product__info__about-button'>

@@ -7,7 +7,6 @@ import CategoryCard from './category-card/CategoryCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { updateProductsData } from '../../store/reducers/ProductSlice';
 import { useParams } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
 
 
 

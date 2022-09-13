@@ -1,0 +1,79 @@
+.attributes-type {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+
+  &-name {
+    text-transform: uppercase;
+    margin-top: 24px;
+    font-family: 'Roboto Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    color: #1D1F22;
+  }
+
+  &-price {
+    margin-top: 36px;
+
+    &-value {
+      font-family: 'Raleway';
+      margin-top: 20px;
+      font-size: 24px;
+    }
+  }
+
+  &-item {
+    padding: 5px;
+    margin-top: 21px;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: #292929;
+    justify-content: center;
+    height: 45px;
+    width: 62px;
+    border: 1px solid #292929;
+    transition: all .3s;
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      box-shadow: 3px 3px 20px rgba(0, 0, 0, .3);
+    }
+  }
+
+  &-item.Color {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #000;
+  }
+
+  &-item.Color.active {
+    width: 32px;
+    height: 32px;
+  }
+
+  &-item.active {
+    background: #1D1F22;
+    color: #FFF;
+  }
+
+  &-item.Color.active:after {
+    position: absolute;
+    content: '';
+    background: #5ECE7B;
+    bottom: -8px;
+    height: 2px;
+    width: 36px;
+  }
+
+}

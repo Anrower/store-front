@@ -4,3 +4,4 @@ export interface ICurrency {
   label: string
   symbol: ICurrencySymbol
 }
+

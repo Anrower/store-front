@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import productReducer from "./reducers/ProductSlice";
 import currencyReducer from "./reducers/CurrencySlice";
+import SelectProductReducer from "./reducers/SelectProductSlice";
 
 const rootReducer = combineReducers({
   productReducer,
   currencyReducer,
+  SelectProductReducer,
 })
 
 export const store = configureStore({
