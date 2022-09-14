@@ -1,24 +1,23 @@
 import { ICurrencySymbol } from './../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 interface ICartState {
   products: IProductCart[]
   totalAmount: number,
-  totalPrice: number | null,
+  totalPrice: number,
 }
 
-interface IProductCart {
-  Id: string | null;
-  Name: string | null;
-  PriceValue: number | null;
-  PriceCurrency: ICurrencySymbol | null;
+export interface IProductCart {
+  Id: string;
+  Name: string;
+  PriceValue: number;
+  PriceCurrency: ICurrencySymbol;
   [index: number]: string;
 }
 
 const initialState: ICartState = {
   products: [],
   totalAmount: 0,
-  totalPrice: null,
+  totalPrice: 0,
 }
 
 export const CartSlice = createSlice({
@@ -29,10 +28,13 @@ export const CartSlice = createSlice({
       state.products.push(action.payload);
       state.totalAmount++;
     },
+    updateTotalPrice(state, action: PayloadAction<number>) {
+      state.totalPrice = state.totalPrice + action.payload;
+    },
   }
 });
 
 export default CartSlice.reducer;
 export const {
-  addToCart,
+  addToCart, updateTotalPrice
 } = CartSlice.actions;

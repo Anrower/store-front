@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-// import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { IAttribute } from '../../../../models/IAttribute';
 import './attributeType.scss';
-// import { updateSelectProduct } from '../../../../store/reducers/SelectProductSlice';
-
 interface IProps {
   attName: string;
   attributes: IAttribute[];
@@ -11,9 +8,6 @@ interface IProps {
 }
 
 const AttributeType = (props: IProps) => {
-  // const dispatch = useAppDispatch();
-  // const { selectProudct } = useAppSelector(store => store.SelectProductReducer)
-  // const { currencyIndex } = useAppSelector(store => store.currencyReducer)
   const { attName, attributes, selectType } = props;
   const [selectAttribute, setSelectAttribute] = useState(0);
 
@@ -21,11 +15,6 @@ const AttributeType = (props: IProps) => {
     setSelectAttribute(idx)
     selectType(event, attName);
   }
-
-  // useEffect(() => {
-  //   dispatch(updateSelectProduct({ ...selectProudct, [attName]: attributes[0].value, [attName]: attributes[1].value }))
-  // }, [])
-
 
   return (
     <div className='attributes-type'>

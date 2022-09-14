@@ -6,7 +6,7 @@ import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from './attribute-type/AttributeType';
 import { updateSelectProduct, resetState } from '../../../store/reducers/SelectProductSlice';
-import { addToCart } from '../../../store/reducers/СartSlice';
+import { addToCart, IProductCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
 
 interface IProps {
@@ -88,6 +88,7 @@ const ProductInfo = (props: IProps) => {
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...selectProudct }))
+    dispatch(updateTotalPrice(product.prices[0].amount))
   }
 
   return (

@@ -12,10 +12,10 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const { loading, error, data } = useQuery<ICategoriesData>(GET_CATEGORIES);
+  let navigate = useNavigate()
 
   useEffect(() => {
     if (!loading && !error && data) {
-      // console.log(data.categories)
     }
   }, [data])
 
@@ -45,7 +45,11 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <img className='header__logo' src={logo} alt="Logo" />
+        <img className='header__logo'
+          src={logo}
+          alt="Logo"
+          onClick={() => navigate('/cart')}
+        />
         <div className='header__card-container'>
           <CurrencyFilter />
           <Cart />
