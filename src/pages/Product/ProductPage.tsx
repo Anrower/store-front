@@ -24,8 +24,9 @@ const ProductPage = () => {
   }, [productId, getId])
 
   return (
-    loading && called ? <p>loading...</p> :
-      data ?
+    (loading && called) ?
+      <p>loading...</p> :
+      (data) ?
         <div className='product'>
           <div className='product__content'>
             <aside className='product__aside'>
@@ -43,7 +44,6 @@ const ProductPage = () => {
           </div>
         </div> :
         <p>{error?.message}</p>
-
   )
 }
 

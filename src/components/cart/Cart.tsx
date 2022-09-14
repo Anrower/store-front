@@ -1,12 +1,14 @@
 import './cart.scss'
 import cart_img from '../../images/cart.svg';
-
-const count = '10'
+import { useAppSelector } from '../../hooks/redux';
 
 const Cart = () => {
+  const { totalAmount } = useAppSelector(store => store.cartReducer)
   return (
     <div className='cart'>
-      <div className='cart__count'>{count}</div>
+      {totalAmount <= 0 ? null :
+        <div className='cart__count'>{totalAmount}</div>
+      }
       <img src={cart_img} alt="Cart" />
     </div>
   )

@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from './attribute-type/AttributeType';
-import { updateSelectProduct } from '../../../store/reducers/SelectProductSlice';
+import { updateSelectProduct, resetState } from '../../../store/reducers/SelectProductSlice';
+import { addToCart } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
 
 interface IProps {
@@ -67,7 +68,9 @@ const ProductInfo = (props: IProps) => {
         PriceCurrency: product.prices[0].currency.symbol,
       }
     ));
-
+    return function cleanup() {
+      dispatch(resetState());
+    };
   }, [])
 
 
@@ -81,6 +84,10 @@ const ProductInfo = (props: IProps) => {
         [name]: type,
       }
     ))
+  }
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...selectProudct }))
   }
 
   return (
@@ -113,7 +120,10 @@ const ProductInfo = (props: IProps) => {
           </p>
         </div>
         <div className='product__info__about-button'>
-          <PrimBtn title='add to cart' height='tall' />
+          <PrimBtn
+            title='add to cart'
+            height='tall'
+            customClick={addToCartHandler} />
         </div>
 
         <div className='product__info__about-description'>

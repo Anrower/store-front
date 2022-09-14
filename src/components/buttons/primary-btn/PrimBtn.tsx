@@ -4,13 +4,15 @@ import './primBtn.scss';
 interface Iprops {
   title: string,
   height?: 'tall';
-  // customClick?: (a: string) => void
+  customClick?: () => void
 }
 
 const PrimBtn = (props: Iprops) => {
-  const { title, height } = props;
+  const { title, height, customClick } = props;
   return (
-    <button className={`btn_primary ${height}`}>
+    <button
+      className={`btn_primary ${height}`}
+      onClick={customClick}>
       {title}
     </button >
   )

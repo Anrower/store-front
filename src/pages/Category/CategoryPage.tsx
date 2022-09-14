@@ -24,7 +24,6 @@ const Category = () => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      console.log(data.category.products);
       dispatch(updateProductsData(data.category.products))
     }
   }, [data])

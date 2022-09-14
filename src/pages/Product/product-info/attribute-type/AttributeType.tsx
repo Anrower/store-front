@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+// import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { IAttribute } from '../../../../models/IAttribute';
 import './attributeType.scss';
-import { updateSelectProduct } from '../../../../store/reducers/SelectProductSlice';
+// import { updateSelectProduct } from '../../../../store/reducers/SelectProductSlice';
 
 interface IProps {
   attName: string;
@@ -11,9 +11,9 @@ interface IProps {
 }
 
 const AttributeType = (props: IProps) => {
-  const dispatch = useAppDispatch();
-  const { selectProudct } = useAppSelector(store => store.SelectProductReducer)
-  const { currencyIndex } = useAppSelector(store => store.currencyReducer)
+  // const dispatch = useAppDispatch();
+  // const { selectProudct } = useAppSelector(store => store.SelectProductReducer)
+  // const { currencyIndex } = useAppSelector(store => store.currencyReducer)
   const { attName, attributes, selectType } = props;
   const [selectAttribute, setSelectAttribute] = useState(0);
 
