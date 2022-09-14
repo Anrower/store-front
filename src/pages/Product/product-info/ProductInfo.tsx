@@ -1,30 +1,17 @@
 import './productInfo.scss';
 import { IProduct } from '../../../models/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
-import { ICurrencySymbol } from '../../../models/ICurrencySymbol';
 import AttributeType from './attribute-type/AttributeType';
 import { updateSelectProduct } from '../../../store/reducers/SelectProductSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
-
 
 interface IProps {
   product: IProduct
   asidePicture: number
 }
-
-interface IAddToCart {
-  Id: string,
-  Name: string,
-  PriceValue: number,
-  PriceCurrency: ICurrencySymbol,
-  Color?: string,
-  Capacity?: string,
-  Size?: string
-}
-
 
 const ProductInfo = (props: IProps) => {
   const dispatch = useAppDispatch();
@@ -36,7 +23,6 @@ const ProductInfo = (props: IProps) => {
 
   const currencySymbol = product.prices[currencyIndex].currency.symbol;
   const price = product.prices[currencyIndex].amount;
-  // console.log(product.attributes[1].id);
 
   const getAllAttribute = (atr: IAttributeSet[]) => {
     const result = [];
@@ -46,39 +32,55 @@ const ProductInfo = (props: IProps) => {
     return result;
   }
 
-  const [addToCart, setAddToCart] = useState<IAddToCart>(
-    {
-      Id: product.id,
-      Name: product.name,
-      PriceValue: product.prices[0].amount,
-      PriceCurrency: product.prices[0].currency.symbol,
-      Color: '',
-      Capacity: '',
-      Size: '',
-    }
-  )
-
   useEffect(() => {
-    dispatch(updateSelectProduct({ ...addToCart, PriceCurrency: currencySymbol, PriceValue: price, }));
-  }, [addToCart, dispatch, currencySymbol, price])
+    dispatch(updateSelectProduct(
+      {
+        ...selectProudct,
+        PriceCurrency: currencySymbol,
+        PriceValue: price,
+      }
+    ));
+  }, [dispatch, currencyIndex])
 
   useEffect(() => {
     const attributes = getAllAttribute(product.attributes);
-    // const atributes = {}
-    for (let i = 0; i < attributes.length; i++) {
-      dispatch(updateSelectProduct({ ...addToCart, [attributes[i]]: product.attributes[i].items[0].value }));
+    let obj: any = {};
+
+    function Att(this: any, key: string, value: string): void {
+      this[key] = value;
     }
 
-  }, [addToCart])
+    for (let i = 0; i < attributes.length; i++) {
+      const tempKey = attributes[i];
+      const tempValue = product.attributes[i].items[0].value;
+      const att = new (Att as any)(tempKey, tempValue);
+      obj = { ...obj, ...att };
+    }
+
+    dispatch(updateSelectProduct(
+      {
+        ...selectProudct,
+        ...obj,
+        Id: product.id,
+        Name: product.name,
+        PriceValue: product.prices[0].amount,
+        PriceCurrency: product.prices[0].currency.symbol,
+      }
+    ));
+
+  }, [])
 
 
   const selectType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>, name: string
   ) => {
     const type = event.currentTarget.getAttribute('data-value');
-    setAddToCart({ ...addToCart, [name]: type })
-    dispatch(updateSelectProduct(addToCart))
-    console.log(type);
+    dispatch(updateSelectProduct(
+      {
+        ...selectProudct,
+        [name]: type,
+      }
+    ))
   }
 
   return (

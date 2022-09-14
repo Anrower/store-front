@@ -6,9 +6,10 @@ interface ISelectProduct {
   Name: string;
   PriceValue: number;
   PriceCurrency: ICurrencySymbol;
-  Color?: string | null;
-  Capacity?: string | null;
-  Size?: string | null;
+  [index: number]: string;
+  // Color?: string | null;
+  // Capacity?: string | null;
+  // Size?: string | null;
 }
 
 interface ISelectProductState {
@@ -21,9 +22,9 @@ const initialState: ISelectProductState = {
     Name: '',
     PriceValue: 0,
     PriceCurrency: '$',
-    Color: '',
-    Capacity: '',
-    Size: '',
+    // Color: '',
+    // Capacity: '',
+    // Size: '',
   }
 };
 
