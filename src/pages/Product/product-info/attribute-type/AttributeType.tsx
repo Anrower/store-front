@@ -29,7 +29,7 @@ const AttributeType = (props: IProps) => {
             `attributes-type-item ${attName} active` :
             `attributes-type-item ${attName}`}
           data-value={i.value}
-          onClick={event => handleClick(event, attName, idx)}
+          onClick={event => handleClick(event, attName, idx,)}
         >{attName !== 'Color' ? i.value : null}</div>
       ))}
     </div>

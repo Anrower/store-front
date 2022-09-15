@@ -1,23 +1,18 @@
+import { ISelectProduct } from './../../models/ISelectProduct';
 import { ICurrencySymbol } from './../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ICartState {
-  products: IProductCart[]
+  products: ISelectProduct[]
   totalAmount: number,
   totalPrice: number,
-}
-
-export interface IProductCart {
-  Id: string;
-  Name: string;
-  PriceValue: number;
-  PriceCurrency: ICurrencySymbol;
-  [index: number]: string;
+  currencySymbol: ICurrencySymbol
 }
 
 const initialState: ICartState = {
   products: [],
   totalAmount: 0,
   totalPrice: 0,
+  currencySymbol: '$',
 }
 
 export const CartSlice = createSlice({

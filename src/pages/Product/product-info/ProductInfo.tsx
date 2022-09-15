@@ -5,9 +5,10 @@ import { useEffect } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from './attribute-type/AttributeType';
-import { updateSelectProduct, resetState } from '../../../store/reducers/SelectProductSlice';
-import { addToCart, IProductCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
+import { updateSelectProduct, resetState, updateSelectAtt } from '../../../store/reducers/SelectProductSlice';
+import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
+import { ISelectAtt } from '../../../models/ISelectAtt';
 
 interface IProps {
   product: IProduct
@@ -37,8 +38,8 @@ const ProductInfo = (props: IProps) => {
     dispatch(updateSelectProduct(
       {
         ...selectProudct,
-        PriceCurrency: currencySymbol,
-        PriceValue: price,
+        priceCurrency: currencySymbol,
+        priceValue: price,
       }
     ));
   }, [dispatch, currencyIndex])
@@ -61,29 +62,33 @@ const ProductInfo = (props: IProps) => {
     dispatch(updateSelectProduct(
       {
         ...selectProudct,
-        ...obj,
-        Id: product.id,
-        Name: product.name,
-        PriceValue: product.prices[0].amount,
-        PriceCurrency: product.prices[0].currency.symbol,
+        brand: product.brand,
+        id: product.id,
+        attributes: product.attributes,
+        name: product.name,
+        priceValue: product.prices[0].amount,
+        priceCurrency: product.prices[0].currency.symbol,
+        gallery: product.gallery,
       }
     ));
+    dispatch(updateSelectAtt(obj))
     return function cleanup() {
       dispatch(resetState());
     };
-  }, [])
-
+  }, []);
 
   const selectType = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>, name: string
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    name: string,
   ) => {
-    const type = event.currentTarget.getAttribute('data-value');
-    dispatch(updateSelectProduct(
-      {
-        ...selectProudct,
-        [name]: type,
+    const attValue = event.currentTarget.getAttribute('data-value');
+
+    if (attValue !== null) {
+      const obj = {
+        [name]: attValue
       }
-    ))
+      dispatch(updateSelectAtt(obj))
+    }
   }
 
   const addToCartHandler = () => {
@@ -101,7 +106,7 @@ const ProductInfo = (props: IProps) => {
         <p className='product__info__about-name'>{product.name}</p>
 
         <div className='product__info__about-attributes'>
-          {product.attributes.map(i => (
+          {product.attributes.map((i, idx) => (
             <div key={i.id}>
               <p className='attributes-type-name'>{i.id}:</p>
               <AttributeType

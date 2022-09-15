@@ -1,3 +1,4 @@
+import { ISelectAtt } from './../../models/ISelectAtt';
 import { ISelectProduct } from '../../models/ISelectProduct';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ISelectProductState {
@@ -6,10 +7,14 @@ interface ISelectProductState {
 
 const initialState: ISelectProductState = {
   selectProudct: {
-    Id: '',
-    Name: '',
-    PriceValue: 0,
-    PriceCurrency: '$',
+    id: '',
+    name: '',
+    brand: '',
+    priceValue: 0,
+    priceCurrency: '$',
+    attributes: [],
+    gallery: [],
+    selectAtt: {},
   }
 };
 
@@ -18,7 +23,11 @@ export const selectProductSlice = createSlice({
   initialState,
   reducers: {
     updateSelectProduct(state, action: PayloadAction<ISelectProduct>) {
-      state.selectProudct = action.payload
+      state.selectProudct = action.payload;
+    },
+    updateSelectAtt(state, action: PayloadAction<ISelectAtt>) {
+      state.selectProudct.selectAtt =
+        { ...state.selectProudct.selectAtt, ...action.payload };
     },
     resetState(state) {
       state.selectProudct = initialState.selectProudct;
@@ -28,5 +37,5 @@ export const selectProductSlice = createSlice({
 
 export default selectProductSlice.reducer;
 export const {
-  updateSelectProduct, resetState,
+  updateSelectProduct, resetState, updateSelectAtt
 } = selectProductSlice.actions;
