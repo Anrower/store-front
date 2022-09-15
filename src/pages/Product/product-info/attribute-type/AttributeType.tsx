@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IAttribute } from '../../../../models/IAttribute';
 import './attributeType.scss';
 interface IProps {
@@ -11,7 +11,11 @@ const AttributeType = (props: IProps) => {
   const { attName, attributes, selectType } = props;
   const [selectAttribute, setSelectAttribute] = useState(0);
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, attName: string, idx: number) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    attName: string,
+    idx: number
+  ) => {
     setSelectAttribute(idx)
     selectType(event, attName);
   }
@@ -29,6 +33,7 @@ const AttributeType = (props: IProps) => {
             `attributes-type-item ${attName} active` :
             `attributes-type-item ${attName}`}
           data-value={i.value}
+          data-select-idx={idx}
           onClick={event => handleClick(event, attName, idx,)}
         >{attName !== 'Color' ? i.value : null}</div>
       ))}

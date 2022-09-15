@@ -9,6 +9,8 @@ import { updateSelectProduct, resetState, updateSelectAtt } from '../../../store
 import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
 import { ISelectAtt } from '../../../models/ISelectAtt';
+import ProductTitle from './product-title/ProductTitle';
+import ProductPrice from './product-price/ProductPrice';
 
 interface IProps {
   product: IProduct
@@ -85,7 +87,7 @@ const ProductInfo = (props: IProps) => {
 
     if (attValue !== null) {
       const obj = {
-        [name]: attValue
+        [name]: attValue,
       }
       dispatch(updateSelectAtt(obj))
     }
@@ -102,11 +104,10 @@ const ProductInfo = (props: IProps) => {
         <img src={product.gallery[asidePicture]} alt={product.name}></img>
       </div>
       <div className='product__info__about'>
-        <h2 className='product__info__about-brand'>{product.brand}</h2>
-        <p className='product__info__about-name'>{product.name}</p>
+        <ProductTitle title={product.brand} subtitle={product.name} />
 
         <div className='product__info__about-attributes'>
-          {product.attributes.map((i, idx) => (
+          {product.attributes.map((i) => (
             <div key={i.id}>
               <p className='attributes-type-name'>{i.id}:</p>
               <AttributeType
@@ -118,12 +119,8 @@ const ProductInfo = (props: IProps) => {
           ))}
         </div>
 
-        <div className='attributes-type-price attributes-type-name'>
-          <span>price:</span>
-          <p className='attributes-type-price-value'>
-            <span>{currencySymbol}</span>
-            {price}
-          </p>
+        <div className='attributes-type-name'>
+          <ProductPrice symbol={currencySymbol} price={price} />
         </div>
         <div className='product__info__about-button'>
           <PrimBtn

@@ -13,22 +13,9 @@
   }
 
   &__about {
-    max-width: 300px;
+    max-width: 310px;
     display: flex;
     flex-direction: column;
-    font-family: 'Raleway';
-    color: #1D1F22;
-    font-size: 30px;
-    line-height: 27px;
-
-    &-brand {
-      font-weight: 600;
-    }
-
-    &-name {
-      margin-top: 16px;
-      font-weight: 400;
-    }
 
     &-attributes {
       margin-top: 40px;
@@ -39,8 +26,6 @@
     }
 
     &-description {
-      // text-overflow: ellipsis;
-      // overflow: hidden;
       margin-top: 40px;
       font-family: 'Roboto';
       font-style: normal;

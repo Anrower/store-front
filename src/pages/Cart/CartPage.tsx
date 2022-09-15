@@ -5,6 +5,7 @@ import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
 import ProductInfo from '../Product/product-info/ProductInfo';
 import AttributeType from '../Product/product-info/attribute-type/AttributeType';
 import { updateSelectAtt } from '../../store/reducers/SelectProductSlice';
+import ProductTitle from '../Product/product-info/product-title/ProductTitle';
 
 const CartPage = () => {
 
@@ -12,7 +13,6 @@ const CartPage = () => {
   const [imgIndex, setImgImdex] = useState(0);
   const dispatch = useAppDispatch();
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
-  console.log(products);
   console.log(products[0].attributes.length);
 
   const selectType = (
@@ -23,7 +23,7 @@ const CartPage = () => {
 
     if (attValue !== null) {
       const obj = {
-        [name]: attValue
+        [name]: attValue,
       }
       dispatch(updateSelectAtt(obj))
     }
@@ -65,8 +65,7 @@ const CartPage = () => {
             <div key={i.id}
               className='cart-page__product-item'>
               <div>
-                <p>Name:<span>{i.name}</span></p>
-                <p>Brand:<span>{i.brand}</span></p>
+                <ProductTitle title={i.brand} subtitle={i.name} />
                 <p>Price:<span>{i.priceCurrency}{i.priceValue}</span></p>
 
                 {i.attributes.map((i, idx) => (
