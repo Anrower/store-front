@@ -65,12 +65,14 @@ const ProductInfo = (props: IProps) => {
       const att = Att(tempKey, tempValue)
       obj = { ...obj, ...att };
     }
-
+    console.log(product.id);
+    console.log(product);
     dispatch(updateSelectProduct(
       {
         ...selectProudct,
         brand: product.brand,
         id: product.id,
+        instock: product.inStock,
         attributes: product.attributes,
         name: product.name,
         priceValue: product.prices[0].amount,

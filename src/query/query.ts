@@ -47,6 +47,8 @@ export const GET_CATEGORIES = gql`
 export const GET_PRODUCT_BY_ID = gql`
   query product($id: String!) { 
     product(id: $id) {
+      id
+      inStock
       name
       gallery
       brand

@@ -7,6 +7,7 @@ import ProductTitle from '../Product/product-info/product-title/ProductTitle';
 import ProductPrice from '../Product/product-info/product-price/ProductPrice';
 import { updateProductParam } from '../../store/reducers/СartSlice';
 import { ICartProductAttUpd } from '../../store/reducers/СartSlice';
+import { ISelectProduct } from '../../models/ISelectProduct';
 
 const CartPage = () => {
 
@@ -15,14 +16,13 @@ const CartPage = () => {
   const dispatch = useAppDispatch();
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
 
-  const selectType = (
+  const updateCartProductType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     name: string,
     idx: number,
     productIdx?: number,
   ) => {
     const attValue = event.currentTarget.getAttribute('data-value');
-    console.log(idx);
 
     if (attValue !== null && productIdx !== undefined) {
       const indexName = `${name}idx`
@@ -63,6 +63,13 @@ const CartPage = () => {
     return
   }
 
+  const getProductCount = (productIdx: number) => {
+    const getId = products[productIdx].id
+    const result = products.filter(item => item.id === getId);
+    console.log(result);
+    return result.length;
+  }
+
   // const []
   return (
     <div className='cart-page'>
@@ -70,20 +77,20 @@ const CartPage = () => {
       <div className='cart-page__content'>
         <div className='cart-page__product'>
           {products.map((i, productIndex) => (
+
             <div key={productIndex}
               className='cart-page__product-item'>
               <div>
                 <ProductTitle title={i.brand} subtitle={i.name} />
                 <ProductPrice price={i.priceValue} symbol={i.priceCurrency} />
 
-                {i.attributes.map((i, idx) => (
+                {i.attributes.map((i) => (
                   <div key={i.id}>
                     <p className='attributes-type-name'>{i.id}:</p>
                     <AttributeType
                       attName={i.id}
                       items={i.items}
-                      selectType={selectType}
-                      productAttIdx={idx}
+                      selectType={updateCartProductType}
                       productIdx={productIndex}
                     />
                   </div>
@@ -93,7 +100,7 @@ const CartPage = () => {
               <div className='item--amount__wrapper'>
                 <div className='item--amount__btns'>
                   <button>-</button>
-                  <span>{5}</span>
+                  <span>{getProductCount(productIndex)}</span>
                   <button>+</button>
                 </div>
                 <div className='item--image'>

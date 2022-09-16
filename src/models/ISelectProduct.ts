@@ -5,6 +5,7 @@ import { ISelectAtt } from "./ISelectAtt";
 export interface ISelectProduct {
   id: string;
   name: string;
+  instock: boolean;
   brand: string;
   priceValue: number;
   priceCurrency: ICurrencySymbol;

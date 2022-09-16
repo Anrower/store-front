@@ -9,6 +9,7 @@ const initialState: ISelectProductState = {
   selectProudct: {
     id: '',
     name: '',
+    instock: true,
     brand: '',
     priceValue: 0,
     priceCurrency: '$',

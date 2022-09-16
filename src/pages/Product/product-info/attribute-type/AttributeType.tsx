@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../../hooks/redux';
 import { IAttribute } from '../../../../models/IAttribute';
-import { ISelectAtt } from '../../../../models/ISelectAtt';
 import './attributeType.scss';
 
 interface IProps {
   productIdx?: number; // product index
-  productAttIdx?: number;  //product attribute index 
   attName: string;
   items: IAttribute[];
   selectType: (
@@ -25,7 +23,6 @@ const AttributeType = (props: IProps) => {
     items,
     selectType,
     productIdx = null,
-    productAttIdx = null,
   } = props;
 
 
