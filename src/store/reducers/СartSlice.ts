@@ -38,11 +38,30 @@ export const CartSlice = createSlice({
     updateProducts(state, action: PayloadAction<ISelectProduct[]>) {
       state.products = action.payload;
     },
+    subtractionTotalPrice(state, action: PayloadAction<number>) {
+      state.totalPrice = state.totalPrice - action.payload;
+    },
+    additionTotalPrice(state, action: PayloadAction<number>) {
+      state.totalPrice = state.totalPrice + action.payload;
+    },
+    decrementProductAmount(state, action: PayloadAction<number>) {
+      state.products[action.payload].amount--;
+    },
+    incrementProductAmount(state, action: PayloadAction<number>) {
+      state.products[action.payload].amount++;
+    },
+    increaseTotalAmount(state) {
+      state.totalAmount++;
+    },
+    decreaseTotalAmount(state) {
+      state.totalAmount--;
+    },
+
 
   }
 });
 
 export default CartSlice.reducer;
 export const {
-  addToCart, updateTotalPrice, updateProductParam, updateProducts
+  addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount
 } = CartSlice.actions;

@@ -5,14 +5,13 @@ import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from '../Product/product-info/attribute-type/AttributeType';
 import ProductTitle from '../Product/product-info/product-title/ProductTitle';
 import ProductPrice from '../Product/product-info/product-price/ProductPrice';
-import { updateProductParam, updateProducts } from '../../store/reducers/СartSlice';
+import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProducts } from '../../store/reducers/СartSlice';
 import { ICartProductAttUpd } from '../../store/reducers/СartSlice';
-import { ISelectProduct } from '../../models/ISelectProduct';
 
 const CartPage = () => {
 
   const [img, setImage] = useState(['']);
-  const [imgIndex, setImgImdex] = useState(0);
+  const [imgIdx, setImgIdx] = useState(0);
   const dispatch = useAppDispatch();
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
 
@@ -37,8 +36,8 @@ const CartPage = () => {
     }
   }
 
-  const swipe = (dir: string, gallery: string[]) => {
-    let currentIndex = imgIndex;
+  const swipe = (dir: string, gallery: string[], productIdx: number) => {
+    let currentIndex = imgIdx;
     if (gallery.length !== 1) {
       setImage(gallery);
 
@@ -57,28 +56,34 @@ const CartPage = () => {
       if (dir === 'left') {
         currentIndex -= 1;
       }
-      setImgImdex(currentIndex);
+      setImgIdx(currentIndex);
 
     }
     return
   }
 
   const getProductCount = (productIdx: number) => products[productIdx].amount
-  const removeProductAmount = (productIndex: number) => {
-    if (products[productIndex].amount === 1) {
+
+  const removeProductAmount = (productIdx: number) => {
+    const productPrice = products[productIdx].priceValue;
+    if (products[productIdx].amount === 1) {
       const result = products.filter((items, index) => {
-        if (index !== productIndex) {
+        if (index !== productIdx) {
           return items;
         }
       });
-      console.log(result);
-      dispatch(updateProducts(result))
+      dispatch(updateProducts(result));
+    } else {
+      dispatch(decrementProductAmount(productIdx));
     }
+    dispatch(subtractionTotalPrice(productPrice));
+    dispatch(decreaseTotalAmount());
   }
-  const addProductAmount = (productIndex: number) => {
-    if (products[productIndex].amount === 1) {
-      console.log('remove');
-    }
+  const addProductAmount = (productIdx: number) => {
+    const productPrice = products[productIdx].priceValue;
+    dispatch(increaseTotalAmount());
+    dispatch(additionTotalPrice(productPrice))
+    dispatch(incrementProductAmount(productIdx));
   }
 
   // const []
@@ -121,9 +126,11 @@ const CartPage = () => {
                   </button>
                 </div>
                 <div className='item--image'>
-                  <img src={i.gallery[imgIndex]} alt={i.name}></img>
-                  <button onClick={() => swipe('left', i.gallery)}>-</button>
-                  <button onClick={() => swipe('right', i.gallery)}>+</button>
+                  <img src={products[productIndex].gallery[imgIdx]} alt={i.name}></img>
+                  <button
+                    onClick={() => swipe('left', i.gallery, productIndex)}>-</button>
+                  <button
+                    onClick={() => swipe('right', i.gallery, productIndex)}>+</button>
                 </div>
               </div>
 
