@@ -8,7 +8,6 @@ import AttributeType from './attribute-type/AttributeType';
 import { updateSelectProduct, resetState, updateSelectAtt } from '../../../store/reducers/SelectProductSlice';
 import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
-import { ISelectAtt } from '../../../models/ISelectAtt';
 import ProductTitle from './product-title/ProductTitle';
 import ProductPrice from './product-price/ProductPrice';
 
@@ -65,21 +64,16 @@ const ProductInfo = (props: IProps) => {
       const att = Att(tempKey, tempValue)
       obj = { ...obj, ...att };
     }
-    console.log(product.id);
-    console.log(product);
     dispatch(updateSelectProduct(
       {
         ...selectProudct,
-        brand: product.brand,
-        id: product.id,
-        instock: product.inStock,
-        attributes: product.attributes,
-        name: product.name,
+        ...product,
         priceValue: product.prices[0].amount,
         priceCurrency: product.prices[0].currency.symbol,
-        gallery: product.gallery,
+        amount: 1,
       }
     ));
+
     dispatch(updateSelectAtt(obj))
     return function cleanup() {
       dispatch(resetState());

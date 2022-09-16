@@ -35,11 +35,14 @@ export const CartSlice = createSlice({
     updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
       state.products[action.payload.productIndex].selectAtt = { ...state.products[action.payload.productIndex].selectAtt, ...action.payload.selectAtt }
     },
+    updateProducts(state, action: PayloadAction<ISelectProduct[]>) {
+      state.products = action.payload;
+    },
 
   }
 });
 
 export default CartSlice.reducer;
 export const {
-  addToCart, updateTotalPrice, updateProductParam
+  addToCart, updateTotalPrice, updateProductParam, updateProducts
 } = CartSlice.actions;

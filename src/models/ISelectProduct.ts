@@ -12,4 +12,5 @@ export interface ISelectProduct {
   attributes: IAttributeSet[];
   gallery: string[];
   selectAtt: ISelectAtt;
+  amount: number;
 }

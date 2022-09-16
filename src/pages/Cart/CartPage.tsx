@@ -5,7 +5,7 @@ import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from '../Product/product-info/attribute-type/AttributeType';
 import ProductTitle from '../Product/product-info/product-title/ProductTitle';
 import ProductPrice from '../Product/product-info/product-price/ProductPrice';
-import { updateProductParam } from '../../store/reducers/СartSlice';
+import { updateProductParam, updateProducts } from '../../store/reducers/СartSlice';
 import { ICartProductAttUpd } from '../../store/reducers/СartSlice';
 import { ISelectProduct } from '../../models/ISelectProduct';
 
@@ -63,11 +63,22 @@ const CartPage = () => {
     return
   }
 
-  const getProductCount = (productIdx: number) => {
-    const getId = products[productIdx].id
-    const result = products.filter(item => item.id === getId);
-    console.log(result);
-    return result.length;
+  const getProductCount = (productIdx: number) => products[productIdx].amount
+  const removeProductAmount = (productIndex: number) => {
+    if (products[productIndex].amount === 1) {
+      const result = products.filter((items, index) => {
+        if (index !== productIndex) {
+          return items;
+        }
+      });
+      console.log(result);
+      dispatch(updateProducts(result))
+    }
+  }
+  const addProductAmount = (productIndex: number) => {
+    if (products[productIndex].amount === 1) {
+      console.log('remove');
+    }
   }
 
   // const []
@@ -99,9 +110,15 @@ const CartPage = () => {
 
               <div className='item--amount__wrapper'>
                 <div className='item--amount__btns'>
-                  <button>-</button>
+                  <button
+                    onClick={() => removeProductAmount(productIndex)}>
+                    -
+                  </button>
                   <span>{getProductCount(productIndex)}</span>
-                  <button>+</button>
+                  <button
+                    onClick={() => addProductAmount(productIndex)}>
+                    +
+                  </button>
                 </div>
                 <div className='item--image'>
                   <img src={i.gallery[imgIndex]} alt={i.name}></img>

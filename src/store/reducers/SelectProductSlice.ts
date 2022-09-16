@@ -16,6 +16,7 @@ const initialState: ISelectProductState = {
     attributes: [],
     gallery: [],
     selectAtt: {},
+    amount: 1,
   }
 };
 
