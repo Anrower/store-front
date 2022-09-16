@@ -1,28 +1,62 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../../../hooks/redux';
 import { IAttribute } from '../../../../models/IAttribute';
+import { ISelectAtt } from '../../../../models/ISelectAtt';
 import './attributeType.scss';
+
 interface IProps {
+  productIdx?: number; // product index
+  productAttIdx?: number;  //product attribute index 
   attName: string;
-  attributes: IAttribute[];
-  selectType: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, name: string) => void;
+  items: IAttribute[];
+  selectType: (
+    event: React.MouseEvent<HTMLDivElement>,
+    name: string,
+    idx: number,
+    productIdx?: number) => void;
 }
 
 const AttributeType = (props: IProps) => {
-  const { attName, attributes, selectType } = props;
-  const [selectAttribute, setSelectAttribute] = useState(0);
+  const { products } = useAppSelector(state => state.cartReducer);
+  const [selectAttribute, setSelectAttribute] = useState<number>(0);
+  let selectIndex: number = 0;
+  const {
+    attName,
+    items,
+    selectType,
+    productIdx = null,
+    productAttIdx = null,
+  } = props;
+
+
+  if (productIdx !== null) {
+    const selectAtt = products[productIdx].selectAtt;
+    const selectName = `${attName}idx`;
+    selectIndex = selectAtt[selectName];
+  }
+
+  useEffect(() => {
+    setSelectAttribute(selectIndex);
+  }, [])
 
   const handleClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     attName: string,
-    idx: number
+    idx: number,
+    productIdx?: number | null,
   ) => {
     setSelectAttribute(idx)
-    selectType(event, attName);
+    if (typeof productIdx === 'number') {
+      selectType(event, attName, idx, productIdx);
+    } else {
+      selectType(event, attName, idx);
+    }
+
   }
 
   return (
     <div className='attributes-type'>
-      {attributes.map((i, idx) => (
+      {items.map((i, idx) => (
         <div
           key={i.value}
           style={attName === 'Color' ? {
@@ -34,8 +68,10 @@ const AttributeType = (props: IProps) => {
             `attributes-type-item ${attName}`}
           data-value={i.value}
           data-select-idx={idx}
-          onClick={event => handleClick(event, attName, idx,)}
-        >{attName !== 'Color' ? i.value : null}</div>
+          onClick={event => handleClick(event, attName, idx, productIdx)}
+        >
+          {attName !== 'Color' ? i.value : null}
+        </div>
       ))}
     </div>
   )

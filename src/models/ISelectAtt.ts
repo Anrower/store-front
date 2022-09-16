@@ -4,6 +4,12 @@ export interface ISelectAtt {
   'Touch ID in keyboard'?: YN | null;
   'Color'?: color | null;
   'Size'?: size | null;
+  'With USB 3 portsidx'?: number;
+  'Capacityidx'?: number;
+  'Touch ID in keyboardidx'?: number;
+  'Coloridx'?: number;
+  'Sizeidx'?: number;
+  [key: string]: any;
 }
 
 type size = 'S' | 'M' | 'L' | 'Xl' | '40' | '41' | '42' | '43';

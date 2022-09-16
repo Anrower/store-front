@@ -2,10 +2,11 @@ import './cartPage.scss';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
-import ProductInfo from '../Product/product-info/ProductInfo';
 import AttributeType from '../Product/product-info/attribute-type/AttributeType';
-import { updateSelectAtt } from '../../store/reducers/SelectProductSlice';
 import ProductTitle from '../Product/product-info/product-title/ProductTitle';
+import ProductPrice from '../Product/product-info/product-price/ProductPrice';
+import { updateProductParam } from '../../store/reducers/СartSlice';
+import { ICartProductAttUpd } from '../../store/reducers/СartSlice';
 
 const CartPage = () => {
 
@@ -13,19 +14,26 @@ const CartPage = () => {
   const [imgIndex, setImgImdex] = useState(0);
   const dispatch = useAppDispatch();
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
-  console.log(products[0].attributes.length);
 
   const selectType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     name: string,
+    idx: number,
+    productIdx?: number,
   ) => {
     const attValue = event.currentTarget.getAttribute('data-value');
+    console.log(idx);
 
-    if (attValue !== null) {
-      const obj = {
-        [name]: attValue,
+    if (attValue !== null && productIdx !== undefined) {
+      const indexName = `${name}idx`
+      const obj: ICartProductAttUpd = {
+        productIndex: productIdx,
+        selectAtt: {
+          [name]: attValue,
+          [indexName]: idx,
+        }
       }
-      dispatch(updateSelectAtt(obj))
+      dispatch(updateProductParam(obj))
     }
   }
 
@@ -61,20 +69,22 @@ const CartPage = () => {
       <h3 className='cart-page__title'>cart</h3>
       <div className='cart-page__content'>
         <div className='cart-page__product'>
-          {products.map((i) => (
-            <div key={i.id}
+          {products.map((i, productIndex) => (
+            <div key={productIndex}
               className='cart-page__product-item'>
               <div>
                 <ProductTitle title={i.brand} subtitle={i.name} />
-                <p>Price:<span>{i.priceCurrency}{i.priceValue}</span></p>
+                <ProductPrice price={i.priceValue} symbol={i.priceCurrency} />
 
                 {i.attributes.map((i, idx) => (
                   <div key={i.id}>
                     <p className='attributes-type-name'>{i.id}:</p>
                     <AttributeType
                       attName={i.id}
-                      attributes={i.items}
+                      items={i.items}
                       selectType={selectType}
+                      productAttIdx={idx}
+                      productIdx={productIndex}
                     />
                   </div>
                 ))}

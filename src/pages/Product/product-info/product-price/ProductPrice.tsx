@@ -10,7 +10,6 @@ const ProductPrice = (props: IProps) => {
   const { symbol, price } = props;
   return (
     <>
-      <span>price:</span>
       <p className={styles.price}>
         <span>{symbol}</span>
         {price}

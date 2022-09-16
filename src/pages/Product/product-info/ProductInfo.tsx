@@ -50,14 +50,19 @@ const ProductInfo = (props: IProps) => {
     const attributes = getAllAttribute(product.attributes);
     let obj: any = {};
 
-    function Att(this: any, key: string, value: string): void {
-      this[key] = value;
+    function Att(key: string, value: string | undefined): any {
+      let name = `${[key]}idx`;
+      return {
+        [key]: value,
+        [name]: 0,
+      }
+
     }
 
     for (let i = 0; i < attributes.length; i++) {
       const tempKey = attributes[i];
       const tempValue = product.attributes[i].items[0].value;
-      const att = new (Att as any)(tempKey, tempValue);
+      const att = Att(tempKey, tempValue)
       obj = { ...obj, ...att };
     }
 
@@ -82,12 +87,15 @@ const ProductInfo = (props: IProps) => {
   const selectType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     name: string,
+    idx: number,
   ) => {
     const attValue = event.currentTarget.getAttribute('data-value');
 
     if (attValue !== null) {
+      const indexName = `${name}idx`
       const obj = {
         [name]: attValue,
+        [indexName]: idx,
       }
       dispatch(updateSelectAtt(obj))
     }
@@ -112,7 +120,7 @@ const ProductInfo = (props: IProps) => {
               <p className='attributes-type-name'>{i.id}:</p>
               <AttributeType
                 attName={i.id}
-                attributes={i.items}
+                items={i.items}
                 selectType={selectType}
               />
             </div>
@@ -120,6 +128,7 @@ const ProductInfo = (props: IProps) => {
         </div>
 
         <div className='attributes-type-name'>
+          <span>price:</span>
           <ProductPrice symbol={currencySymbol} price={price} />
         </div>
         <div className='product__info__about-button'>

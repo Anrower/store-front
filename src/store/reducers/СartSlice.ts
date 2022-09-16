@@ -1,3 +1,4 @@
+import { ISelectAtt } from './../../models/ISelectAtt';
 import { ISelectProduct } from './../../models/ISelectProduct';
 import { ICurrencySymbol } from './../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -6,6 +7,11 @@ interface ICartState {
   totalAmount: number,
   totalPrice: number,
   currencySymbol: ICurrencySymbol
+}
+
+export interface ICartProductAttUpd {
+  productIndex: number,
+  selectAtt: ISelectAtt,
 }
 
 const initialState: ICartState = {
@@ -26,10 +32,14 @@ export const CartSlice = createSlice({
     updateTotalPrice(state, action: PayloadAction<number>) {
       state.totalPrice = state.totalPrice + action.payload;
     },
+    updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
+      state.products[action.payload.productIndex].selectAtt = { ...state.products[action.payload.productIndex].selectAtt, ...action.payload.selectAtt }
+    },
+
   }
 });
 
 export default CartSlice.reducer;
 export const {
-  addToCart, updateTotalPrice
+  addToCart, updateTotalPrice, updateProductParam
 } = CartSlice.actions;
