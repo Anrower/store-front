@@ -1,36 +1,51 @@
-import Dropdown from '../dropdown/Dropdown';
 import { useAppSelector } from '../../hooks/redux';
-import { useQuery } from '@apollo/client';
-import { ICategoriesData } from '../../models/ICategoriesData';
 import './currencyFilter.scss';
-import { GET_CURRENCY } from '../../query/query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ICurrency } from '../../models/ICurrency';
 import { useAppDispatch } from '../../hooks/redux';
-import { updateCurrencyList } from '../../store/reducers/CurrencySlice';
+import { changeCurrentCurrency } from '../../store/reducers/CurrencySlice';
 
 const CurrencyFilter = () => {
-
   const dispatch = useAppDispatch()
-  const { loading, error, data } = useQuery<ICategoriesData>(GET_CURRENCY);
-  const { current, currencyList } = useAppSelector(store => store.currencyReducer)
+  const { current, currenciesList } = useAppSelector(store => store.currencyReducer)
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !error && data) {
-      const arr = [];
-      const temp = data.categories[0].products[0].prices
-      for (let i = 0; i < temp.length; i++) {
-        arr.push(temp[i].currency);
-      }
-      dispatch(updateCurrencyList(arr))
-    }
-  }, [data])
-
-
+  const toggle = () => setOpen(!open);
+  const handleClick = (item: ICurrency) => {
+    dispatch(changeCurrentCurrency(item));
+    // dispatch(updateCurrencyIndex(CurrencyIndex));
+    toggle();
+  }
 
   return (
-    <div className='currency-filter'>
-      <Dropdown currentCurrency={current} currencyList={currencyList} />
+    <div className="currency-filter">
+      <div className="dd-wrapper">
+        <div
+          className="dd-header"
+          onClick={() => toggle()}
+        >
+          <div className="dd-header__title">
+            <p className="dd-header__title_current">
+              {current?.symbol}
+            </p>
+            <p className="dd-header__title_action">
+              {open ? '\u02C4' : '\u02C5'}
+            </p>
+          </div>
+        </div>
+        {open && (
+          <ul className="dd-list">
+            {currenciesList?.map(item => (
+              <li className="dd-list-item" key={item.label}>
+                <button onClick={() => handleClick(item)}>
+                  <span>{item.symbol}</span>
+                  <span>{item.label}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   )
 }

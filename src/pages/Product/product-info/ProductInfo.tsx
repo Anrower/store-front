@@ -1,7 +1,7 @@
 import './productInfo.scss';
 import { IProduct } from '../../../models/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from './attribute-type/AttributeType';
@@ -9,7 +9,7 @@ import { updateSelectProduct, resetState, updateSelectAtt } from '../../../store
 import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
 import { IAttributeSet } from '../../../models/IAttributeSet';
 import ProductTitle from './product-title/ProductTitle';
-import ProductPrice from './product-price/ProductPrice';
+import { usePrice } from '../../../hooks/usePrice';
 
 interface IProps {
   product: IProduct
@@ -19,13 +19,10 @@ interface IProps {
 const ProductInfo = (props: IProps) => {
   const dispatch = useAppDispatch();
   const { selectProudct } = useAppSelector(store => store.SelectProductReducer)
-  const { currencyIndex } = useAppSelector(store => store.currencyReducer)
+  const { current } = useAppSelector(store => store.currencyReducer)
   const { product, asidePicture } = props
   const wideDescription = 370;
   const description = parse(product.description);
-
-  const currencySymbol = product.prices[currencyIndex].currency.symbol;
-  const price = product.prices[currencyIndex].amount;
 
   const getAllAttribute = (atr: IAttributeSet[]) => {
     const result = [];
@@ -35,15 +32,17 @@ const ProductInfo = (props: IProps) => {
     return result;
   }
 
+  const currentPrice = usePrice(product, current);
+
   useEffect(() => {
     dispatch(updateSelectProduct(
       {
         ...selectProudct,
-        priceCurrency: currencySymbol,
-        priceValue: price,
+        // priceCurrency: currencySymbol,
+        // priceValue: price,
       }
     ));
-  }, [dispatch, currencyIndex])
+  }, [dispatch])
 
   useEffect(() => {
     const attributes = getAllAttribute(product.attributes);
@@ -103,17 +102,17 @@ const ProductInfo = (props: IProps) => {
   }
 
   return (
-    <div className='product__info'>
-      <div className='product__info__image-wrapper'>
+    <div className="product__info">
+      <div className="product__info__image-wrapper">
         <img src={product.gallery[asidePicture]} alt={product.name}></img>
       </div>
-      <div className='product__info__about'>
+      <div className="product__info__about">
         <ProductTitle title={product.brand} subtitle={product.name} />
 
-        <div className='product__info__about-attributes'>
+        <div className="product__info__about-attributes">
           {product.attributes.map((i) => (
             <div key={i.id}>
-              <p className='attributes-type-name'>{i.id}:</p>
+              <p className="attributes-type-name">{i.id}:</p>
               <AttributeType
                 attName={i.id}
                 items={i.items}
@@ -123,24 +122,27 @@ const ProductInfo = (props: IProps) => {
           ))}
         </div>
 
-        <div className='attributes-type-name'>
+        <div className="attributes-type-name">
           <span>price:</span>
-          <ProductPrice symbol={currencySymbol} price={price} />
+          <p className="product__price">
+            <span>{currentPrice?.currency.symbol}</span>
+            {currentPrice?.amount}
+          </p>
         </div>
-        <div className='product__info__about-button'>
+        <div className="product__info__about-button">
           <PrimBtn
-            title='add to cart'
-            height='tall'
+            title="add to cart"
+            height="tall"
             customClick={addToCartHandler} />
         </div>
 
-        <div className='product__info__about-description'>
+        <div className="product__info__about-description">
           {product.description.length > wideDescription ? null : description}
         </div>
 
       </div>
       {product.description.length > wideDescription ?
-        <div className='product__info__about-description'>
+        <div className="product__info__about-description">
           {description}
         </div> :
         null

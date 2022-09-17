@@ -3,47 +3,31 @@ import { ICurrencySymbol } from '../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CurrencyState {
-  current: ICurrencySymbol;
-  currencyList: ICurrency[];
-  currencyIndex: number;
+  current: ICurrency | null
+  currenciesList: ICurrency[]
 };
 
 const initialState: CurrencyState = {
-  current: '$',
-  currencyList: [{
-    label: 'USD',
-    symbol: '$'
-  },
-  {
-    label: 'EUR',
-    symbol: '€'
-  },
-  {
-    label: 'JPY',
-    symbol: '¥'
-  }],
-  currencyIndex: 0,
+  current: null,
+  currenciesList: [],
 };
 
 export const currencySlice = createSlice({
   name: 'currency',
   initialState,
   reducers: {
-    changeCurrentCurrency(state, action: PayloadAction<ICurrencySymbol>) {
+    changeCurrentCurrency(state, action: PayloadAction<ICurrency>) {
       state.current = action.payload;
     },
-    updateCurrencyList(state, action: PayloadAction<ICurrency[]>) {
-      state.currencyList = action.payload;
+    initCurrencies(state, action: PayloadAction<ICurrency[]>) {
+      state.currenciesList = action.payload;
+      state.current = state.currenciesList[0];
     },
-    updateCurrencyIndex(state, action: PayloadAction<number>) {
-      state.currencyIndex = action.payload
-    }
   }
 });
 
 export default currencySlice.reducer;
 export const {
   changeCurrentCurrency,
-  updateCurrencyList,
-  updateCurrencyIndex,
+  initCurrencies,
 } = currencySlice.actions;

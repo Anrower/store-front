@@ -8,8 +8,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { updateProductsData } from '../../store/reducers/ProductSlice';
 import { useParams } from 'react-router-dom';
 
-
-
 const Category = () => {
   const { categoryId } = useParams();
   const obj = { title: "all" }

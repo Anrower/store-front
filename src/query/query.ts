@@ -21,23 +21,17 @@ export const GET_BY_CATEGORY = gql`
   }
 `;
 
-export const GET_CURRENCY = gql`
-  query currency {
-    categories {
-      products {
-        prices {
-          currency {
-            label
-            symbol
-          }
-        }
-      }
+export const GET_CURRENCIES = gql`
+  query currencies {
+    currencies {
+      label
+      symbol
     }
   }
 `
 
 export const GET_CATEGORIES = gql`
-  query currency {
+  query categories {
     categories {
       name
     }

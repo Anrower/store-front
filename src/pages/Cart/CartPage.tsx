@@ -1,10 +1,9 @@
 import './cartPage.scss';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from '../Product/product-info/attribute-type/AttributeType';
 import ProductTitle from '../Product/product-info/product-title/ProductTitle';
-import ProductPrice from '../Product/product-info/product-price/ProductPrice';
 import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProducts } from '../../store/reducers/СartSlice';
 import { ICartProductAttUpd } from '../../store/reducers/СartSlice';
 
@@ -14,6 +13,11 @@ const CartPage = () => {
   const [imgIdx, setImgIdx] = useState(0);
   const dispatch = useAppDispatch();
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
+  const { current } = useAppSelector(store => store.currencyReducer)
+
+  // const currentPrice = useMemo(() => {
+  //   return products.prices.find((price) => (price.currency.label === current?.label))
+  // }, [current, product])
 
   const updateCartProductType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -98,7 +102,10 @@ const CartPage = () => {
               className='cart-page__product-item'>
               <div>
                 <ProductTitle title={i.brand} subtitle={i.name} />
-                <ProductPrice price={i.priceValue} symbol={i.priceCurrency} />
+                {/* <p className="product__price">
+                  <span>{currentPrice?.amount}</span>
+                  {currentPrice?.currency.symbol}
+                </p> */}
 
                 {i.attributes.map((i) => (
                   <div key={i.id}>
