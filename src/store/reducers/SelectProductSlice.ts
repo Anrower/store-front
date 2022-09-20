@@ -11,6 +11,7 @@ const initialState: ISelectProductState = {
     name: '',
     instock: true,
     brand: '',
+    prices: [],
     priceValue: 0,
     priceCurrency: '$',
     attributes: [],

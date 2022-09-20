@@ -1,0 +1,150 @@
+import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { usePrice } from '../../../hooks/usePrice';
+import { ISelectProduct } from '../../../models/ISelectProduct';
+import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, ICartProductAttUpd, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProducts } from '../../../store/reducers/СartSlice';
+import AttributeType from '../../Product/product-info/attribute-type/AttributeType';
+import ProductTitle from '../../Product/product-info/product-title/ProductTitle';
+import styles from './cartProduct.module.scss';
+
+interface IProps {
+  product: ISelectProduct,
+  productIdx: number,
+}
+
+const CartProduct = (props: IProps) => {
+
+  const [img, setImage] = useState(['']);
+  const [imgIdx, setImgIdx] = useState(0);
+
+  const { product, productIdx } = props;
+  const dispatch = useAppDispatch();
+  const { current } = useAppSelector(store => store.currencyReducer)
+  const currentPrice = usePrice(product, current);
+  const { products } = useAppSelector(state => state.cartReducer)
+
+  const updateCartProductType = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    name: string,
+    idx: number,
+    productIdx?: number,
+  ) => {
+    const attValue = event.currentTarget.getAttribute('data-value');
+
+    if (attValue !== null && productIdx !== undefined) {
+      const indexName = `${name}idx`
+      const obj: ICartProductAttUpd = {
+        productIndex: productIdx,
+        selectAtt: {
+          [name]: attValue,
+          [indexName]: idx,
+        }
+      }
+      dispatch(updateProductParam(obj))
+    }
+  }
+
+  const swipe = (dir: string, gallery: string[], productIdx: number) => {
+    let currentIndex = imgIdx;
+    if (gallery.length !== 1) {
+      setImage(gallery);
+
+      if (dir === 'right' && currentIndex + 1 === gallery.length) {
+        currentIndex = 0;
+      }
+
+      if ((dir === 'left') && currentIndex === 0) {
+        currentIndex = gallery.length - 1;
+      }
+
+      if (dir === 'right') {
+        currentIndex += 1;
+
+      }
+      if (dir === 'left') {
+        currentIndex -= 1;
+      }
+      setImgIdx(currentIndex);
+
+    }
+    return
+  }
+
+  const removeProductAmount = (productIdx: number) => {
+    const productPrice = product.priceValue;
+    if (product.amount === 1) {
+      const result = products.filter((items, index) => {
+        if (index !== productIdx) {
+          return items;
+        }
+      });
+      dispatch(updateProducts(result));
+    } else {
+      dispatch(decrementProductAmount(productIdx));
+    }
+    dispatch(subtractionTotalPrice(productPrice));
+    dispatch(decreaseTotalAmount());
+  }
+  const addProductAmount = (productIdx: number) => {
+    const productPrice = product.priceValue;
+    dispatch(increaseTotalAmount());
+    dispatch(additionTotalPrice(productPrice))
+    dispatch(incrementProductAmount(productIdx));
+  }
+
+  return (
+    <div className={styles.product}>
+      <div>
+        <ProductTitle title={product.brand} subtitle={product.name} />
+        <p className={styles.price}>
+          {currentPrice?.currency.symbol}
+          <span>{currentPrice?.amount}</span>
+        </p>
+
+        {product.attributes.map((product) => (
+          <div key={product.id}>
+            <AttributeType
+              attName={product.id}
+              items={product.items}
+              selectType={updateCartProductType}
+              productIdx={productIdx}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.amount}>
+        <div className={styles.amount__btns}>
+          <button
+            onClick={() => removeProductAmount(productIdx)}>
+            -
+          </button>
+          <span>{product.amount}</span>
+          <button
+            onClick={() => addProductAmount(productIdx)}>
+            +
+          </button>
+        </div>
+        <div className={styles.swiper}>
+          <div className={styles.swiper__image__wrapper}>
+            <img src={product.gallery[imgIdx]} alt={product.name}></img>
+          </div>
+          <div className={styles.swiper__btn__wrapper}>
+            <button
+              className={styles.swiper__btn}
+              onClick={() => swipe('left', product.gallery, productIdx)}>
+              <i className={`${styles.arrow} ${styles.arrow_left}`}></i>
+            </button>
+            <button
+              className={styles.swiper__btn}
+              onClick={() => swipe('right', product.gallery, productIdx)}>
+              <i className={`${styles.arrow} ${styles.arrow_right}`}></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div >
+  )
+}
+
+export default CartProduct

@@ -52,25 +52,28 @@ const AttributeType = (props: IProps) => {
   }
 
   return (
-    <div className='attributes-type'>
-      {items.map((i, idx) => (
-        <div
-          key={i.value}
-          style={attName === 'Color' ? {
-            background: i.value,
-            filter: 'grayscale(40%)'
-          } : undefined}
-          className={idx === selectAttribute ?
-            `attributes-type-item ${attName} active` :
-            `attributes-type-item ${attName}`}
-          data-value={i.value}
-          data-select-idx={idx}
-          onClick={event => handleClick(event, attName, idx, productIdx)}
-        >
-          {attName !== 'Color' ? i.value : null}
-        </div>
-      ))}
-    </div>
+    <>
+      <p className='attributes-type-name'>{attName}:</p>
+      <div className='attributes-type'>
+        {items.map((i, idx) => (
+          <div
+            key={i.value}
+            style={attName === 'Color' ? {
+              background: i.value,
+              filter: 'grayscale(40%)'
+            } : undefined}
+            className={idx === selectAttribute ?
+              `attributes-type-item ${attName} active` :
+              `attributes-type-item ${attName}`}
+            data-value={i.value}
+            data-select-idx={idx}
+            onClick={event => handleClick(event, attName, idx, productIdx)}
+          >
+            {attName !== 'Color' ? i.value : null}
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 

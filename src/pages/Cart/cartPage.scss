@@ -18,50 +18,10 @@
     gap: 20px;
   }
 
-  &__product {
+  &__products {
     display: flex;
     gap: 20px;
     flex-direction: column;
-
-    &-item {
-      padding: 24px 0 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid #E5E5E5;
-
-      &>.item--amount__wrapper {
-        display: flex;
-        gap: 24px;
-
-        &>.item--image {
-          width: 250px;
-        }
-
-        &>.item--amount__btns {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
-          font-family: 'Raleway';
-          font-weight: 400;
-          font-size: 24px;
-          line-height: 160%;
-          color: #1D1F22;
-
-          &>button {
-            border: 1px solid #1D1F22;
-            background: none;
-            width: 45px;
-            height: 45px;
-          }
-
-          &>span {
-            font-weight: 500;
-          }
-        }
-      }
-    }
   }
 
   &__total-box {

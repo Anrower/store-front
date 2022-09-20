@@ -1,3 +1,4 @@
+import { IPrice } from './IPrice';
 import { ICurrencySymbol } from "./ICurrencySymbol";
 import { IAttributeSet } from "./IAttributeSet";
 import { ISelectAtt } from "./ISelectAtt";
@@ -5,12 +6,13 @@ import { ISelectAtt } from "./ISelectAtt";
 export interface ISelectProduct {
   id: string;
   name: string;
+  gallery: string[];
   instock: boolean;
-  brand: string;
-  priceValue: number;
+  prices: IPrice[]
   priceCurrency: ICurrencySymbol;
   attributes: IAttributeSet[];
-  gallery: string[];
   selectAtt: ISelectAtt;
   amount: number;
+  brand: string;
+  priceValue: number;
 }

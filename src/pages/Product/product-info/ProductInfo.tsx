@@ -37,6 +37,7 @@ const ProductInfo = (props: IProps) => {
   useEffect(() => {
     dispatch(updateSelectProduct(
       {
+        ...product,
         ...selectProudct,
         // priceCurrency: currencySymbol,
         // priceValue: price,
@@ -112,7 +113,6 @@ const ProductInfo = (props: IProps) => {
         <div className="product__info__about-attributes">
           {product.attributes.map((i) => (
             <div key={i.id}>
-              <p className="attributes-type-name">{i.id}:</p>
               <AttributeType
                 attName={i.id}
                 items={i.items}
