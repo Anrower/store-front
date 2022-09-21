@@ -24,6 +24,11 @@ const CartPage = () => {
     dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
   }, [current, products])
 
+  const getTax = (percent: number) => {
+    const result = Math.round(((totalPrice * (percent / 100)) * 100) / 100);
+    return result;
+  }
+
 
 
   return (
@@ -42,7 +47,10 @@ const CartPage = () => {
         <div className='cart-page__total-box'>
           <p className='discont total-item'>
             <span className='discont--title'>Tax 21%:</span>
-            <span className='discont--value'>10</span>
+            <span className='discont--value'>
+              <span>{current?.symbol}</span>
+              {getTax(21)}
+            </span>
           </p>
           <p className='quantity total-item'>
             <span className='quantity--title'>Qantity:</span>
