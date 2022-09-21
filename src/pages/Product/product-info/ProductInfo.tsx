@@ -3,7 +3,7 @@ import { IProduct } from '../../../models/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect } from 'react';
 import parse from 'html-react-parser';
-import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
+import Btn from '../../../components/Button/Btn';
 import AttributeType from './attribute-type/AttributeType';
 import { updateSelectProduct, resetState, updateSelectAtt } from '../../../store/reducers/SelectProductSlice';
 import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
@@ -127,9 +127,10 @@ const ProductInfo = (props: IProps) => {
           </p>
         </div>
         <div className="product__info__about-button">
-          <PrimBtn
+          <Btn
             title="add to cart"
-            height="tall"
+            size="tall"
+            important='primary'
             customClick={addToCartHandler} />
         </div>
 

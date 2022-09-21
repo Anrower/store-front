@@ -7,6 +7,7 @@ interface IProps {
   productIdx?: number; // product index
   attName: string;
   items: IAttribute[];
+  overlay?: boolean;
   selectType: (
     event: React.MouseEvent<HTMLDivElement>,
     name: string,
@@ -23,6 +24,7 @@ const AttributeType = (props: IProps) => {
     items,
     selectType,
     productIdx = null,
+    overlay
   } = props;
 
 
@@ -53,8 +55,20 @@ const AttributeType = (props: IProps) => {
 
   return (
     <>
-      <p className='attributes-type-name'>{attName}:</p>
-      <div className='attributes-type'>
+      <p
+        className={overlay
+          ? 'attributes-type_overlay-name'
+          : 'attributes-type-name'
+        }
+      >
+        {attName}:
+      </p>
+      <div
+        className={overlay
+          ? 'attributes-type_overlay'
+          : 'attributes-type'
+        }
+      >
         {items.map((i, idx) => (
           <div
             key={i.value}
@@ -62,9 +76,15 @@ const AttributeType = (props: IProps) => {
               background: i.value,
               filter: 'grayscale(40%)'
             } : undefined}
-            className={idx === selectAttribute ?
-              `attributes-type-item ${attName} active` :
-              `attributes-type-item ${attName}`}
+            className={overlay
+              ? (idx === selectAttribute ?
+                `attributes-type_overlay-item ${attName} active` :
+                `attributes-type_overlay-item ${attName}`)
+              :
+              (idx === selectAttribute ?
+                `attributes-type-item ${attName} active` :
+                `attributes-type-item ${attName}`)
+            }
             data-value={i.value}
             data-select-idx={idx}
             onClick={event => handleClick(event, attName, idx, productIdx)}

@@ -1,6 +1,6 @@
 import './header.scss';
 import logo from '../../images/logo.svg'
-import Cart from '../cart/Cart';
+import CartIcon from '../CartIcon/CartIcon';
 import CurrencyFilter from '../CurrencyFilter/CurrencyFilter';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const { loading, error, data } = useQuery<ICategoriesData>(GET_CATEGORIES);
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!loading && !error && data) {
@@ -48,11 +48,10 @@ const Header = () => {
         <img className="header__logo"
           src={logo}
           alt="Logo"
-          onClick={() => navigate('/cart')}
         />
         <div className="header__card-container">
           <CurrencyFilter />
-          <Cart />
+          <CartIcon />
         </div>
       </div>
     </header>

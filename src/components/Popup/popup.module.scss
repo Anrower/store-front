@@ -1,0 +1,17 @@
+.popup {
+  position: fixed;
+  width: 100%;
+  background: rgba(57, 55, 72, 0.22);
+  top: 92px;
+  left: 0;
+  height: 100vh;
+  z-index: 80;
+
+  &__inner {
+    width: 325px;
+    padding: 32px 16px;
+    background-color: #FFFFFF;
+    margin-right: 10%;
+    margin-left: auto;
+  }
+}

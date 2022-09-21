@@ -1,6 +1,6 @@
 import './cartPage.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
+import Btn from '../../components/Button/Btn';
 import CartProduct from './CartProduct/CartProduct';
 import { updateTotalPrice } from '../../store/reducers/СartSlice';
 import { useEffect } from 'react';
@@ -16,7 +16,6 @@ const CartPage = () => {
         ? product.priceValue
         : product.amount * product.priceValue
     ));
-    console.log(prices);
     const newTotalPrice = prices.reduce(
       (previousValue, currentValue) => previousValue + currentValue,
       0
@@ -67,7 +66,10 @@ const CartPage = () => {
 
           </p>
           <div className='order-btn'>
-            <PrimBtn title='order' />
+            <Btn
+              title='order'
+              important='primary'
+            />
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import './App.scss';
 import CategoryPage from './pages/Category/CategoryPage';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProductPage from './pages/Product/ProductPage';
-import Layout from './components/layout/Layout';
+import Layout from './components/Layout/Layout';
 import CartPage from './pages/Cart/CartPage';
 import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
