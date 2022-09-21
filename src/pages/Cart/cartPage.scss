@@ -36,8 +36,6 @@
 
     &>.total-item {
       display: flex;
-      width: 185px;
-      padding-right: 14px;
       font-family: 'Raleway';
       font-style: normal;
       font-weight: 400;
@@ -49,7 +47,13 @@
       &>.quantity--value,
       &>.total-price--value {
         font-weight: 700;
-        margin-left: auto;
+      }
+
+      &>.discont--title,
+      &>.quantity--title,
+      &>.total-price--title {
+        width: 105px;
+        margin-right: 10px;
       }
 
       &>.total-price--title {

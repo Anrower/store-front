@@ -14,6 +14,12 @@ export interface ICartProductAttUpd {
   selectAtt: ISelectAtt,
 }
 
+export interface ICartProductPriceUpd {
+  productIndex: number,
+  value: number,
+  symbol: ICurrencySymbol,
+}
+
 const initialState: ICartState = {
   products: [],
   totalAmount: 0,
@@ -30,10 +36,16 @@ export const CartSlice = createSlice({
       state.totalAmount++;
     },
     updateTotalPrice(state, action: PayloadAction<number>) {
-      state.totalPrice = state.totalPrice + action.payload;
+      state.totalPrice = action.payload;
     },
     updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
       state.products[action.payload.productIndex].selectAtt = { ...state.products[action.payload.productIndex].selectAtt, ...action.payload.selectAtt }
+    },
+    updateProductPrice(state, action: PayloadAction<ICartProductPriceUpd>) {
+      state.products[action.payload.productIndex].priceValue =
+        action.payload.value
+      state.products[action.payload.productIndex].priceCurrency =
+        action.payload.symbol
     },
     updateProducts(state, action: PayloadAction<ISelectProduct[]>) {
       state.products = action.payload;
@@ -63,5 +75,6 @@ export const CartSlice = createSlice({
 
 export default CartSlice.reducer;
 export const {
-  addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount
+  addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount,
+  updateProductPrice
 } = CartSlice.actions;

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
-import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, ICartProductAttUpd, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProducts } from '../../../store/reducers/СartSlice';
+import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, ICartProductAttUpd, ICartProductPriceUpd, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProductPrice, updateProducts } from '../../../store/reducers/СartSlice';
 import AttributeType from '../../Product/product-info/attribute-type/AttributeType';
 import ProductTitle from '../../Product/product-info/product-title/ProductTitle';
 import styles from './cartProduct.module.scss';
@@ -21,7 +21,7 @@ const CartProduct = (props: IProps) => {
   const dispatch = useAppDispatch();
   const { current } = useAppSelector(store => store.currencyReducer)
   const currentPrice = usePrice(product, current);
-  const { products } = useAppSelector(state => state.cartReducer)
+  const { products } = useAppSelector(state => state.cartReducer);
 
   const updateCartProductType = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -69,6 +69,18 @@ const CartProduct = (props: IProps) => {
     }
     return
   }
+
+  useEffect(() => {
+    if (current && currentPrice) {
+      const obj: ICartProductPriceUpd = {
+        productIndex: productIdx,
+        value: currentPrice.amount,
+        symbol: current.symbol,
+
+      }
+      dispatch(updateProductPrice(obj))
+    }
+  }, [currentPrice, current])
 
   const removeProductAmount = (productIdx: number) => {
     const productPrice = product.priceValue;

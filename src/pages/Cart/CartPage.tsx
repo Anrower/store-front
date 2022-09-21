@@ -1,10 +1,30 @@
 import './cartPage.scss';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import PrimBtn from '../../components/buttons/primary-btn/PrimBtn';
 import CartProduct from './CartProduct/CartProduct';
+import { updateTotalPrice } from '../../store/reducers/СartSlice';
+import { useEffect } from 'react';
 
 const CartPage = () => {
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
+  const { current } = useAppSelector(store => store.currencyReducer);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const prices = products.map((product) => (
+      product.amount === 1
+        ? product.priceValue
+        : product.amount * product.priceValue
+    ));
+    console.log(prices);
+    const newTotalPrice = prices.reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      0
+    );
+    dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
+  }, [current, products])
+
+
 
   return (
     <div className='cart-page'>
@@ -29,8 +49,14 @@ const CartPage = () => {
             <span className='quantity--value'>{totalAmount}</span>
           </p>
           <p className='total-price total-item'>
-            <span className='total-price--title'>Total:</span>
-            <span className='total-price--value'>{ }{totalPrice}</span>
+            <span className='total-price--title'>
+              Total:
+            </span>
+            <span className='total-price--value'>
+              {current?.symbol}
+              <span>{totalPrice}</span>
+            </span>
+
           </p>
           <div className='order-btn'>
             <PrimBtn title='order' />

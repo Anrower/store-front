@@ -1,7 +1,7 @@
 import './productInfo.scss';
 import { IProduct } from '../../../models/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import parse from 'html-react-parser';
 import PrimBtn from '../../../components/buttons/primary-btn/PrimBtn';
 import AttributeType from './attribute-type/AttributeType';
@@ -35,15 +35,16 @@ const ProductInfo = (props: IProps) => {
   const currentPrice = usePrice(product, current);
 
   useEffect(() => {
-    dispatch(updateSelectProduct(
-      {
-        ...product,
-        ...selectProudct,
-        // priceCurrency: currencySymbol,
-        // priceValue: price,
-      }
-    ));
-  }, [dispatch])
+    if (currentPrice && current) {
+      dispatch(updateSelectProduct(
+        {
+          ...selectProudct,
+          priceValue: currentPrice?.amount,
+          priceCurrency: current?.symbol,
+        }
+      ));
+    }
+  }, [current, currentPrice])
 
   useEffect(() => {
     const attributes = getAllAttribute(product.attributes);
@@ -55,7 +56,6 @@ const ProductInfo = (props: IProps) => {
         [key]: value,
         [name]: 0,
       }
-
     }
 
     for (let i = 0; i < attributes.length; i++) {
@@ -68,12 +68,9 @@ const ProductInfo = (props: IProps) => {
       {
         ...selectProudct,
         ...product,
-        priceValue: product.prices[0].amount,
-        priceCurrency: product.prices[0].currency.symbol,
         amount: 1,
       }
     ));
-
     dispatch(updateSelectAtt(obj))
     return function cleanup() {
       dispatch(resetState());
@@ -98,8 +95,8 @@ const ProductInfo = (props: IProps) => {
   }
 
   const addToCartHandler = () => {
-    dispatch(addToCart({ ...selectProudct }))
-    dispatch(updateTotalPrice(product.prices[0].amount))
+    dispatch(addToCart({ ...selectProudct }));
+    dispatch(updateTotalPrice(selectProudct.priceValue));
   }
 
   return (
