@@ -27,15 +27,15 @@ const ProductPage = () => {
     (loading && called) ?
       <p>loading...</p> :
       (data) ?
-        <div className='product'>
-          <div className='product__content'>
-            <aside className='product__aside'>
-              <div className='product__aside__image-wrapper'>
+        <div className="product">
+          <div className="product__content">
+            <aside className="product__aside">
+              <div className="product__aside__image-wrapper">
                 {data.product.gallery.map((value, idx) => (
                   <img key={value}
                     className={idx === asidePicture ? 'active' : undefined}
                     src={value}
-                    alt='product'
+                    alt="product"
                     onClick={() => { setAsidePicture(idx) }} />
                 ))}
               </div>

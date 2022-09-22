@@ -3,21 +3,21 @@ import { ISelectProduct } from './../../models/ISelectProduct';
 import { ICurrencySymbol } from './../../models/ICurrencySymbol';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ICartState {
-  products: ISelectProduct[]
-  totalAmount: number,
-  totalPrice: number,
-  currencySymbol: ICurrencySymbol
+  products: ISelectProduct[];
+  totalAmount: number;
+  totalPrice: number;
+  currencySymbol: ICurrencySymbol;
 }
 
 export interface ICartProductAttUpd {
-  productIndex: number,
-  selectAtt: ISelectAtt,
+  productIndex: number;
+  selectAtt: ISelectAtt;
 }
 
 export interface ICartProductPriceUpd {
-  productIndex: number,
-  value: number,
-  symbol: ICurrencySymbol,
+  productIndex: number;
+  value: number;
+  symbol: ICurrencySymbol;
 }
 
 const initialState: ICartState = {
@@ -31,7 +31,7 @@ export const CartSlice = createSlice({
   name: 'Cart',
   initialState,
   reducers: {
-    addToCart(state, action: PayloadAction<any>) {
+    addToCart(state, action: PayloadAction<ISelectProduct>) {
       state.products.push(action.payload);
       state.totalAmount++;
     },
@@ -39,7 +39,10 @@ export const CartSlice = createSlice({
       state.totalPrice = action.payload;
     },
     updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
-      state.products[action.payload.productIndex].selectAtt = { ...state.products[action.payload.productIndex].selectAtt, ...action.payload.selectAtt }
+      state.products[action.payload.productIndex].selectAtt = {
+        ...state.products[action.payload.productIndex].selectAtt,
+        ...action.payload.selectAtt
+      };
     },
     updateProductPrice(state, action: PayloadAction<ICartProductPriceUpd>) {
       state.products[action.payload.productIndex].priceValue =
@@ -68,13 +71,11 @@ export const CartSlice = createSlice({
     decreaseTotalAmount(state) {
       state.totalAmount--;
     },
-
-
   }
 });
 
 export default CartSlice.reducer;
 export const {
   addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount,
-  updateProductPrice
+  updateProductPrice,
 } = CartSlice.actions;

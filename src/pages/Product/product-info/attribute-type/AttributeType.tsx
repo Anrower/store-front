@@ -50,23 +50,22 @@ const AttributeType = (props: IProps) => {
     } else {
       selectType(event, attName, idx);
     }
-
   }
 
   return (
     <>
       <p
         className={overlay
-          ? 'attributes-type_overlay-name'
-          : 'attributes-type-name'
+          ? "attributes-type_overlay-name"
+          : "attributes-type-name"
         }
       >
         {attName}:
       </p>
       <div
         className={overlay
-          ? 'attributes-type_overlay'
-          : 'attributes-type'
+          ? "attributes-type_overlay"
+          : "attributes-type"
         }
       >
         {items.map((i, idx) => (
@@ -89,7 +88,7 @@ const AttributeType = (props: IProps) => {
             data-select-idx={idx}
             onClick={event => handleClick(event, attName, idx, productIdx)}
           >
-            {attName !== 'Color' ? i.value : null}
+            {attName !== "Color" ? i.value : null}
           </div>
         ))}
       </div>

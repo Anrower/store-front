@@ -27,9 +27,9 @@ const Category = () => {
   }, [data])
 
   return (
-    <div className='category'>
-      <h3 className='category__title'>{`${obj.title}`}</h3>
-      <div className='category__content'>
+    <div className="category">
+      <h3 className="category__title">{`${obj.title}`}</h3>
+      <div className="category__content">
         {products ?
           products.map(i => (<CategoryCard key={i.id} product={i} />
           )) : null

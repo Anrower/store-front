@@ -23,7 +23,7 @@ const CartOverlay = () => {
       0
     );
     dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
-  }, [current, products])
+  }, [current, totalAmount])
 
   const viewBagHandler = () => {
     navigate('/cart')
@@ -60,15 +60,15 @@ const CartOverlay = () => {
       </div>
       <div className={styles.cart__overlay_btns}>
         <Btn
-          title='view bag'
-          size='overlay'
-          important='secondary'
+          title="view bag"
+          size="overlay"
+          important="secondary"
           customClick={viewBagHandler}
         />
         <Btn
-          title='check out'
-          size='overlay'
-          important='primary'
+          title="check out"
+          size="overlay"
+          important="primary"
         />
       </div>
 

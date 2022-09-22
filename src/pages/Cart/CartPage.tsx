@@ -21,20 +21,18 @@ const CartPage = () => {
       0
     );
     dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
-  }, [current, products])
+  }, [current, totalAmount])
 
   const getTax = (percent: number) => {
-    const result = Math.round(((totalPrice * (percent / 100)) * 100) / 100);
+    const result = (Math.round((totalPrice * (percent / 100)) * 100) / 100);
     return result;
   }
 
-
-
   return (
-    <div className='cart-page'>
-      <h3 className='cart-page__title'>cart</h3>
-      <div className='cart-page__content'>
-        <div className='cart-page__products'>
+    <div className="cart-page">
+      <h3 className="cart-page__title">cart</h3>
+      <div className="cart-page__content">
+        <div className="cart-page__products">
           {products.map((i, productIndex) => (
             <CartProduct
               key={productIndex}
@@ -43,32 +41,32 @@ const CartPage = () => {
             />
           ))}
         </div>
-        <div className='cart-page__total-box'>
-          <p className='discont total-item'>
-            <span className='discont--title'>Tax 21%:</span>
-            <span className='discont--value'>
+        <div className="cart-page__total-box">
+          <p className="discont total-item">
+            <span className="discont--title">Tax 21%:</span>
+            <span className="discont--value">
               <span>{current?.symbol}</span>
               {getTax(21)}
             </span>
           </p>
-          <p className='quantity total-item'>
-            <span className='quantity--title'>Qantity:</span>
-            <span className='quantity--value'>{totalAmount}</span>
+          <p className="quantity total-item">
+            <span className="quantity--title">Qantity:</span>
+            <span className="quantity--value">{totalAmount}</span>
           </p>
-          <p className='total-price total-item'>
-            <span className='total-price--title'>
+          <p className="total-price total-item">
+            <span className="total-price--title">
               Total:
             </span>
-            <span className='total-price--value'>
+            <span className="total-price--value">
               {current?.symbol}
               <span>{totalPrice}</span>
             </span>
 
           </p>
-          <div className='order-btn'>
+          <div className="order-btn">
             <Btn
-              title='order'
-              important='primary'
+              title="order"
+              important="primary"
             />
           </div>
         </div>

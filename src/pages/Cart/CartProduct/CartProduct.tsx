@@ -41,7 +41,7 @@ const CartProduct = (props: IProps) => {
           [indexName]: idx,
         }
       }
-      dispatch(updateProductParam(obj))
+      dispatch(updateProductParam(obj));
     }
   }
 

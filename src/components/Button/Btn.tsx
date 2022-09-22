@@ -11,7 +11,6 @@ interface Iprops {
 
 const PrimBtn = (props: Iprops) => {
   const { title, size, customClick, important } = props;
-  console.log(size);
   return (
     <button
       className={important === 'primary' ?

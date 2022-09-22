@@ -11,11 +11,11 @@ const Cart = () => {
   return (
     <>
       <div
-        className='cart'
+        className="cart"
         onClick={() => setButtonPopup(!buttonPopup)}
       >
         {totalAmount <= 0 ? null :
-          <div className='cart__count'>{totalAmount}</div>
+          <div className="cart__count">{totalAmount}</div>
         }
         <img src={cart_img} alt="Cart" />
       </div>
