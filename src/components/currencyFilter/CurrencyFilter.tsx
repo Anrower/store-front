@@ -7,13 +7,12 @@ import { changeCurrentCurrency } from '../../store/reducers/CurrencySlice';
 
 const CurrencyFilter = () => {
   const dispatch = useAppDispatch()
-  const { current, currenciesList } = useAppSelector(store => store.currencyReducer)
+  const { currentCurrency: current, currenciesList } = useAppSelector(store => store.currencyReducer)
   const [open, setOpen] = useState(false);
 
   const toggle = () => setOpen(!open);
   const handleClick = (item: ICurrency) => {
     dispatch(changeCurrentCurrency(item));
-    // dispatch(updateCurrencyIndex(CurrencyIndex));
     toggle();
   }
 

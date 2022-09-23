@@ -1,27 +1,29 @@
 import './cartPage.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import Btn from '../../components/Button/Btn';
+import Button from '../../components/Button/Button';
 import CartProduct from './CartProduct/CartProduct';
 import { updateTotalPrice } from '../../store/reducers/СartSlice';
 import { useEffect } from 'react';
+import { orderHandler } from '../../helpers/orderHandler';
 
 const CartPage = () => {
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
-  const { current } = useAppSelector(store => store.currencyReducer);
+  const { currentCurrency: current } = useAppSelector(store => store.currencyReducer);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const prices = products.map((product) => (
-      product.amount === 1
-        ? product.priceValue
-        : product.amount * product.priceValue
-    ));
-    const newTotalPrice = prices.reduce(
-      (previousValue, currentValue) => previousValue + currentValue,
-      0
-    );
-    dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
-  }, [current, totalAmount])
+
+  // useEffect(() => {
+  //   const prices = products.map((product) => (
+  //     product.amount === 1
+  //       ? product.priceValue
+  //       : product.amount * product.priceValue
+  //   ));
+  //   const newTotalPrice = prices.reduce(
+  //     (previousValue, currentValue) => previousValue + currentValue,
+  //     0
+  //   );
+  //   dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
+  // }, [current, totalAmount, dispatch, products])
 
   const getTax = (percent: number) => {
     const result = (Math.round((totalPrice * (percent / 100)) * 100) / 100);
@@ -33,10 +35,10 @@ const CartPage = () => {
       <h3 className="cart-page__title">cart</h3>
       <div className="cart-page__content">
         <div className="cart-page__products">
-          {products.map((i, productIndex) => (
+          {products.map((product, productIndex) => (
             <CartProduct
               key={productIndex}
-              product={i}
+              product={product}
               productIdx={productIndex}
             />
           ))}
@@ -64,9 +66,10 @@ const CartPage = () => {
 
           </p>
           <div className="order-btn">
-            <Btn
+            <Button
               title="order"
               important="primary"
+              onClick={orderHandler}
             />
           </div>
         </div>

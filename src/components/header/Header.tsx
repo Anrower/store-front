@@ -6,18 +6,16 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { GET_CATEGORIES } from '../../query/query';
 import { ICategoriesData } from '../../models/ICategoriesData';
-import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 
 const Header = () => {
   const { loading, error, data } = useQuery<ICategoriesData>(GET_CATEGORIES);
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (!loading && !error && data) {
     }
-  }, [data])
+  }, [data, error, loading])
 
   return (
     <header className="header">

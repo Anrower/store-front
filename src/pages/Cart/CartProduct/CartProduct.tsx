@@ -2,9 +2,20 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
-import { additionTotalPrice, decreaseTotalAmount, decrementProductAmount, ICartProductAttUpd, ICartProductPriceUpd, increaseTotalAmount, incrementProductAmount, subtractionTotalPrice, updateProductParam, updateProductPrice, updateProducts } from '../../../store/reducers/СartSlice';
-import AttributeType from '../../Product/product-info/attribute-type/AttributeType';
-import ProductTitle from '../../Product/product-info/product-title/ProductTitle';
+import {
+  additionTotalPrice,
+  decreaseTotalAmount,
+  decrementProductAmount,
+  ICartProductAttUpd, ICartProductPriceUpd,
+  increaseTotalAmount,
+  incrementProductAmount,
+  subtractionTotalPrice,
+  updateProductParam,
+  // updateProductPrice,
+  updateProducts
+} from '../../../store/reducers/СartSlice';
+import AttributeType from '../../Product/ProductInfo/AttributeType/AttributeType';
+import ProductTitle from '../../Product/ProductInfo/ProductTitle/ProductTitle';
 import styles from './cartProduct.module.scss';
 
 interface IProps {
@@ -20,29 +31,28 @@ const CartProduct = (props: IProps) => {
 
   const { product, productIdx, overlay } = props;
   const dispatch = useAppDispatch();
-  const { current } = useAppSelector(store => store.currencyReducer)
+  const { currentCurrency: current } = useAppSelector(store => store.currencyReducer)
   const currentPrice = usePrice(product, current);
   const { products } = useAppSelector(state => state.cartReducer);
 
   const updateCartProductType = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    name: string,
-    idx: number,
-    productIdx?: number,
+    attributeName: string,
+    atributeValue?: string,
+    productIndex?: number | null,
   ) => {
-    const attValue = event.currentTarget.getAttribute('data-value');
+    // const attValue = event.currentTarget.getAttribute('data-value');
 
-    if (attValue !== null && productIdx !== undefined) {
-      const indexName = `${name}idx`
-      const obj: ICartProductAttUpd = {
-        productIndex: productIdx,
-        selectAtt: {
-          [name]: attValue,
-          [indexName]: idx,
-        }
-      }
-      dispatch(updateProductParam(obj));
-    }
+    // if (attValue !== null && productIdx !== undefined) {
+    //   const indexName = `${name}idx`
+    //   const obj: ICartProductAttUpd = {
+    //     productIndex: productIdx,
+    //     selectAtt: {
+    //       [name]: attValue,
+    //       [indexName]: idx,
+    //     }
+    //   }
+    //   dispatch(updateProductParam(obj));
+    // }
   }
 
   const swipe = (dir: string, gallery: string[], productIdx: number) => {
@@ -79,29 +89,29 @@ const CartProduct = (props: IProps) => {
         symbol: current.symbol,
 
       }
-      dispatch(updateProductPrice(obj))
+      // dispatch(updateProductPrice(obj))
     }
-  }, [currentPrice, current])
+  }, [currentPrice, current, dispatch, productIdx])
 
   const removeProductAmount = (productIdx: number) => {
-    const productPrice = product.priceValue;
+    // const productPrice = product.priceValue;
     if (product.amount === 1) {
-      const result = products.filter((items, index) => {
+      const result = products.filter((item, index) => {
         if (index !== productIdx) {
-          return items;
+          return true;
         }
       });
       dispatch(updateProducts(result));
     } else {
       dispatch(decrementProductAmount(productIdx));
     }
-    dispatch(subtractionTotalPrice(productPrice));
+    // dispatch(subtractionTotalPrice(productPrice));
     dispatch(decreaseTotalAmount());
   }
   const addProductAmount = (productIdx: number) => {
-    const productPrice = product.priceValue;
+    // const productPrice = product.priceValue;
     dispatch(increaseTotalAmount());
-    dispatch(additionTotalPrice(productPrice))
+    // dispatch(additionTotalPrice(productPrice))
     dispatch(incrementProductAmount(productIdx));
   }
 
@@ -131,8 +141,8 @@ const CartProduct = (props: IProps) => {
         {product.attributes.map((product) => (
           <div key={product.id}>
             <AttributeType
-              attName={product.id}
-              items={product.items}
+              attributeName={product.id}
+              attributeOptions={product.items}
               selectType={updateCartProductType}
               productIdx={productIdx}
               overlay={overlay}

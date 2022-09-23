@@ -44,12 +44,12 @@ export const CartSlice = createSlice({
         ...action.payload.selectAtt
       };
     },
-    updateProductPrice(state, action: PayloadAction<ICartProductPriceUpd>) {
-      state.products[action.payload.productIndex].priceValue =
-        action.payload.value
-      state.products[action.payload.productIndex].priceCurrency =
-        action.payload.symbol
-    },
+    // updateProductPrice(state, action: PayloadAction<ICartProductPriceUpd>) {
+    //   state.products[action.payload.productIndex].priceValue =
+    //     action.payload.value
+    //   state.products[action.payload.productIndex].priceCurrency =
+    //     action.payload.symbol
+    // },
     updateProducts(state, action: PayloadAction<ISelectProduct[]>) {
       state.products = action.payload;
     },
@@ -77,5 +77,5 @@ export const CartSlice = createSlice({
 export default CartSlice.reducer;
 export const {
   addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount,
-  updateProductPrice,
+  // updateProductPrice,
 } = CartSlice.actions;

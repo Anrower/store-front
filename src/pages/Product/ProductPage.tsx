@@ -4,7 +4,7 @@ import { useLazyQuery } from '@apollo/client';
 import { GET_PRODUCT_BY_ID } from '../../query/query';
 import { useEffect } from 'react';
 import { IProductData } from '../../models/IProductData';
-import ProductInfo from './product-info/ProductInfo';
+import ProductInfo from './ProductInfo/ProductInfo';
 import { useState } from 'react';
 
 const ProductPage = () => {

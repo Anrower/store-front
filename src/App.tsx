@@ -1,4 +1,5 @@
 import './App.scss';
+import './common.scss';
 import CategoryPage from './pages/Category/CategoryPage';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProductPage from './pages/Product/ProductPage';
@@ -10,8 +11,6 @@ import { GET_CURRENCIES } from './query/query';
 import { ICurrensiesResponse } from './models/ICurrensiesResponse';
 import { useAppDispatch } from './hooks/redux';
 import { initCurrencies } from './store/reducers/CurrencySlice';
-
-
 
 function App() {
   const dispatch = useAppDispatch();

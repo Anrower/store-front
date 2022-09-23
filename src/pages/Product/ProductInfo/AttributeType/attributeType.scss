@@ -32,6 +32,10 @@
     border: 1px solid #292929;
     transition: all .3s;
 
+    &_warning {
+      border: 2px solid red;
+    }
+
     &:hover,
     &:focus {
       cursor: pointer;
@@ -44,6 +48,10 @@
     width: 32px;
     height: 32px;
     border: 2px solid #000;
+  }
+
+  &-item_warning.Color {
+    border: 2px solid red;
   }
 
   &-item.Color.active {

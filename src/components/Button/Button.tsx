@@ -1,23 +1,24 @@
-import './btn.scss';
+import './button.scss';
 
 type TSize = 'overlay' | 'tall';
 
-interface Iprops {
+interface IProps {
   title: string,
   size?: TSize;
   important: 'primary' | 'secondary';
-  customClick?: () => void
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const PrimBtn = (props: Iprops) => {
-  const { title, size, customClick, important } = props;
+const PrimBtn = (props: IProps) => {
+  const { title, size, important, ...rest } = props;
   return (
     <button
       className={important === 'primary' ?
         `btn_primary ${size}` :
         `btn_secondary ${size}`
       }
-      onClick={customClick}>
+      {...rest}
+    >
       {title}
     </button >
   )

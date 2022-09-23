@@ -9,14 +9,14 @@ export const useUpdateSelectType = (
   const attValue = event.currentTarget.getAttribute('data-value');
 
   if (attValue !== null && productIdx !== undefined) {
-    const indexName = `${name}idx`
-    const obj: ICartProductAttUpd = {
-      productIndex: productIdx,
-      selectAtt: {
-        [name]: attValue,
-        [indexName]: idx,
-      }
-    }
-    return obj;
+    //   const indexName = `${name}idx`
+    //   const obj: ICartProductAttUpd = {
+    //     productIndex: productIdx,
+    //     selectAtt: {
+    //       [name]: attValue,
+    //       [indexName]: idx,
+    //     }
+    //   }
+    //   return obj;
   }
 }
