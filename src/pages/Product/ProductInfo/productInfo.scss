@@ -4,6 +4,13 @@
   flex-wrap: wrap;
   gap: 100px;
 
+  &__image-outer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+
   &__image-wrapper {
     width: 610px;
     height: 511px;

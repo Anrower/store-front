@@ -76,6 +76,15 @@ export const CartSlice = createSlice({
 
 export default CartSlice.reducer;
 export const {
-  addToCart, updateTotalPrice, updateProductParam, updateProducts, subtractionTotalPrice, increaseTotalAmount, decreaseTotalAmount, decrementProductAmount, additionTotalPrice, incrementProductAmount,
+  addToCart,
+  updateTotalPrice,
+  updateProductParam,
+  updateProducts,
+  subtractionTotalPrice,
+  increaseTotalAmount,
+  decreaseTotalAmount,
+  decrementProductAmount,
+  additionTotalPrice,
+  incrementProductAmount,
   // updateProductPrice,
 } = CartSlice.actions;

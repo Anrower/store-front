@@ -31,8 +31,8 @@ const CartProduct = (props: IProps) => {
 
   const { product, productIdx, overlay } = props;
   const dispatch = useAppDispatch();
-  const { currentCurrency: current } = useAppSelector(store => store.currencyReducer)
-  const currentPrice = usePrice(product, current);
+  const { currentCurrency } = useAppSelector(store => store.currencyReducer)
+  const currentPrice = usePrice(product, currentCurrency);
   const { products } = useAppSelector(state => state.cartReducer);
 
   const updateCartProductType = (
@@ -82,16 +82,16 @@ const CartProduct = (props: IProps) => {
   }
 
   useEffect(() => {
-    if (current && currentPrice) {
+    if (currentCurrency && currentPrice) {
       const obj: ICartProductPriceUpd = {
         productIndex: productIdx,
         value: currentPrice.amount,
-        symbol: current.symbol,
+        symbol: currentCurrency.symbol,
 
       }
       // dispatch(updateProductPrice(obj))
     }
-  }, [currentPrice, current, dispatch, productIdx])
+  }, [currentPrice, currentCurrency, dispatch, productIdx])
 
   const removeProductAmount = (productIdx: number) => {
     // const productPrice = product.priceValue;

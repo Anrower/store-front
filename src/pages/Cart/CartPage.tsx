@@ -69,7 +69,7 @@ const CartPage = () => {
             <Button
               title="order"
               important="primary"
-              onClick={orderHandler}
+              handleClick={orderHandler}
             />
           </div>
         </div>

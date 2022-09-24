@@ -64,13 +64,13 @@ const CartOverlay = () => {
           title="view bag"
           size="overlay"
           important="secondary"
-          onClick={viewBagHandler}
+          handleClick={viewBagHandler}
         />
         <Button
           title="check out"
           size="overlay"
           important="primary"
-          onClick={orderHandler}
+          handleClick={orderHandler}
         />
       </div>
 

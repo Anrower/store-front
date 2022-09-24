@@ -3,7 +3,6 @@ import { getClassName } from '../../../../helpers/getClassName';
 import { useAppSelector } from '../../../../hooks/redux';
 import { IAttribute } from '../../../../models/IAttribute';
 import './attributeType.scss';
-
 interface IProps {
   warning?: boolean
   setWarning?: (a: boolean) => void
@@ -31,18 +30,14 @@ const AttributeType = (props: IProps) => {
     overlay
   } = props;
 
-
-
   useEffect(() => {
     if (warning && setWarning) {
-      console.log(selectAttribute);
-      let timer = setTimeout(() => setWarning(false), 2000)
+      let timer = setTimeout(() => setWarning(false), 1200)
       return () => {
         clearTimeout(timer)
       }
     }
   }, [warning, setWarning, selectAttribute])
-
 
   if (productIdx !== null) {
     const selectAtt = products[productIdx].selectAtt;

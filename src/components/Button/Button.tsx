@@ -3,21 +3,23 @@ import './button.scss';
 type TSize = 'overlay' | 'tall';
 
 interface IProps {
-  title: string,
-  size?: TSize;
-  important: 'primary' | 'secondary';
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  title: string
+  disabled?: boolean
+  size?: TSize
+  important: 'primary' | 'secondary'
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const PrimBtn = (props: IProps) => {
-  const { title, size, important, ...rest } = props;
+  const { title, size, important, handleClick, disabled } = props;
   return (
     <button
       className={important === 'primary' ?
         `btn_primary ${size}` :
         `btn_secondary ${size}`
       }
-      {...rest}
+      disabled={disabled}
+      onClick={handleClick}
     >
       {title}
     </button >

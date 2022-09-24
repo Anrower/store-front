@@ -1,17 +1,14 @@
 import './productInfo.scss';
 import { IProduct } from '../../../models/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { useEffect, useState } from 'react';
-import parse from 'html-react-parser';
+import { useState } from 'react';
 import Btn from '../../../components/Button/Button';
 import AttributeType from './AttributeType/AttributeType';
-import { addToCart, updateTotalPrice } from '../../../store/reducers/СartSlice';
-import { IAttributeSet } from '../../../models/IAttributeSet';
+import { additionTotalPrice, addToCart } from '../../../store/reducers/СartSlice';
 import ProductTitle from './ProductTitle/ProductTitle';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
 import { getClassName } from '../../../helpers/getClassName';
-
 interface IProps {
   product: IProduct
   asidePicture: number
@@ -31,14 +28,22 @@ const ProductInfo = (props: IProps) => {
     selectAtt: {},
     amount: 1,
   })
+  console.log(warning);
 
-  const isAttributesSelect = () => {
+  function createMarkup() {
+    return { __html: product.description };
+  }
+
+  const isAllAttributesSelect = () => {
     return Object.keys(selectProduct.selectAtt).length === selectProduct.attributes.length;
   }
 
   const addToCartHandler = () => {
-    const check = isAttributesSelect();
-    if (!check) {
+    const check = isAllAttributesSelect();
+    if (check && currentPrice && product.inStock) {
+      dispatch(addToCart(selectProduct));
+      dispatch(additionTotalPrice(currentPrice.amount));
+    } else {
       setWarning(true);
     }
   }
@@ -46,10 +51,7 @@ const ProductInfo = (props: IProps) => {
   const selectType = (
     atributeName: string,
     atributeValue?: string,
-    productIdx?: number,
   ): void => {
-    // console.log(`name: ${atributeName}`);
-    // console.log(`value: ${atributeValue}`);
     setSelectProduct({
       ...selectProduct,
       selectAtt: {
@@ -61,15 +63,36 @@ const ProductInfo = (props: IProps) => {
 
   return (
     <div className="product__info">
-      <div className="product__info__image-wrapper">
-        <img
-          src={product.gallery[asidePicture]}
-          alt={product.name}>
-        </img>
+      <div className='product__info__image-outer'>
+        {!product.inStock && (
+          <span
+            className={getClassName({
+              "_sold-out-title_big": true,
+              "_sold-out-title_big_warning": warning,
+            })}>
+            OUT OF STOCK
+          </span>
+        )}
+
+        <div
+          className={getClassName({
+            'product__info__image-wrapper': true,
+            '_sold-out-image-filter': !product.inStock,
+          })}
+        >
+
+          <img
+            src={product.gallery[asidePicture]}
+            alt={product.name}>
+          </img>
+        </div>
       </div>
 
       <div className="product__info__about">
-        <ProductTitle title={product.brand} subtitle={product.name} />
+        <ProductTitle
+          title={product.brand}
+          subtitle={product.name}
+        />
 
         <div className='product__info__about-attributes'>
           {product.attributes.map((atrribute) => (
@@ -100,19 +123,26 @@ const ProductInfo = (props: IProps) => {
             title="add to cart"
             size="tall"
             important='primary'
-            onClick={addToCartHandler}
+            handleClick={addToCartHandler}
+            disabled={warning}
           />
         </div>
 
-        <div className="product__info__about-description">
-          {/* {product.description.length > wideDescription ? null : description} */}
+        <div
+          className="product__info__about-description"
+          dangerouslySetInnerHTML={
+            product.description.length > wideDescription ? undefined : createMarkup()
+          }
+        >
         </div>
 
       </div>
 
       {product.description.length > wideDescription ?
-        <div className="product__info__about-description" >
-          {/* {description} */}
+        <div
+          className="product__info__about-description"
+          dangerouslySetInnerHTML={createMarkup()}
+        >
         </div> :
         null
       }

@@ -12,6 +12,10 @@
   border: none;
   transition: all .3s;
 
+  &[disabled] {
+    background: gray;
+  }
+
   &:hover,
   &:focus {
     cursor: pointer;

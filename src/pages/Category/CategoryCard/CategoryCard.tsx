@@ -22,7 +22,7 @@ const CategoryCard = (props: IProps) => {
       onClick={() => { navigate(id); }}
     >
       {!inStock && (
-        <span className="categoryCard__image_sold-out">
+        <span className="_sold-out-title">
           OUT OF STOCK
         </span>
       )}
@@ -30,7 +30,7 @@ const CategoryCard = (props: IProps) => {
       <div
         className={getClassName({
           'categoryCard__wrapper': true,
-          'categoryCard__wrapper_filter': !inStock
+          '_sold-out-image-filter': !inStock
         })}
       >
         <div className="categoryCard__image-wrapper">
