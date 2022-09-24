@@ -65,11 +65,7 @@ const ProductInfo = (props: IProps) => {
     <div className="product__info">
       <div className='product__info__image-outer'>
         {!product.inStock && (
-          <span
-            className={getClassName({
-              "_sold-out-title_big": true,
-              "_sold-out-title_big_warning": warning,
-            })}>
+          <span className="_sold-out-title_big">
             OUT OF STOCK
           </span>
         )}
@@ -99,7 +95,7 @@ const ProductInfo = (props: IProps) => {
             <div key={atrribute.id}>
               <AttributeType
                 attributeName={atrribute.id}
-                attributeOptions={atrribute.items}
+                attributesOptions={atrribute.items}
                 selectType={selectType}
                 warning={warning}
                 setWarning={setWarning}
@@ -124,7 +120,7 @@ const ProductInfo = (props: IProps) => {
             size="tall"
             important='primary'
             handleClick={addToCartHandler}
-            disabled={warning}
+            disabled={warning || !product.inStock}
           />
         </div>
 

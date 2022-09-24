@@ -8,7 +8,7 @@ interface IProps {
   setWarning?: (a: boolean) => void
   productIdx?: number
   attributeName: string
-  attributeOptions: IAttribute[]
+  attributesOptions: IAttribute[]
   overlay?: boolean
   selectType: (
     attributeName: string,
@@ -22,13 +22,23 @@ const AttributeType = (props: IProps) => {
   const [selectAttribute, setSelectAttribute] = useState<number>(-1);
   const {
     attributeName,
-    attributeOptions,
+    attributesOptions,
     selectType,
     productIdx = null,
     warning,
     setWarning,
     overlay
   } = props;
+
+  const getselectAttributeIndex = (
+    attributValue: string | undefined,
+    attributeOptions: IAttribute[]
+  ): number => {
+    const index = attributeOptions
+      .findIndex((attribute) => attribute.value === attributValue);
+    return index;
+  }
+
 
   useEffect(() => {
     if (warning && setWarning) {
@@ -39,31 +49,22 @@ const AttributeType = (props: IProps) => {
     }
   }, [warning, setWarning, selectAttribute])
 
-  if (productIdx !== null) {
-    const selectAtt = products[productIdx].selectAtt;
-    const selectName = `${attributeName}idx`;
-    // selectIndex = selectAtt[selectName];
-  }
 
-  const selectAttributeOption = (
-    attributValue: string | undefined,
-    attributeOptions: IAttribute[]
-  ): number => {
-    const index = attributeOptions
-      .findIndex((attribute) => attribute.value === attributValue);
-    return index;
-  }
-
-  // useEffect(() => {
-  //   setSelectAttribute(selectIndex);
-  // }, [selectIndex])
+  useEffect(() => {
+    if (productIdx !== null) {
+      const selectOptions = products[productIdx].selectAtt;
+      const optionValue = selectOptions[attributeName];
+      const index = getselectAttributeIndex(optionValue, attributesOptions);
+      setSelectAttribute(index);
+    }
+  }, [attributeName, attributesOptions, productIdx, products])
 
   const handleClick = (
     attributeName: string,
     atributeValue?: string,
     productIdx?: number | null,
   ) => {
-    const index = selectAttributeOption(atributeValue, attributeOptions);
+    const index = getselectAttributeIndex(atributeValue, attributesOptions);
     setSelectAttribute(index);
     if (typeof productIdx === 'number') {
       selectType(attributeName, atributeValue, productIdx);
@@ -88,7 +89,7 @@ const AttributeType = (props: IProps) => {
           : "attributes-type"
         }
       >
-        {attributeOptions.map((attribute, idx) => (
+        {attributesOptions.map((attribute, idx) => (
           <div
             className={getClassName({
               [`attributes-type_overlay-item ${attributeName} active`]: overlay && idx === selectAttribute,

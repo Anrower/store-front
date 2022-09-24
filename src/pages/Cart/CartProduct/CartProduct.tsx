@@ -25,22 +25,20 @@ interface IProps {
 }
 
 const CartProduct = (props: IProps) => {
-
-  const [img, setImage] = useState(['']);
-  const [imgIdx, setImgIdx] = useState(0);
-
   const { product, productIdx, overlay } = props;
   const dispatch = useAppDispatch();
   const { currentCurrency } = useAppSelector(store => store.currencyReducer)
   const currentPrice = usePrice(product, currentCurrency);
   const { products } = useAppSelector(state => state.cartReducer);
 
-  const updateCartProductType = (
+  const [img, setImage] = useState(['']);
+  const [imgIdx, setImgIdx] = useState(0);
+
+  const updateCartProductOptions = (
     attributeName: string,
     atributeValue?: string,
     productIndex?: number | null,
-  ) => {
-    // const attValue = event.currentTarget.getAttribute('data-value');
+  ): void => {
 
     // if (attValue !== null && productIdx !== undefined) {
     //   const indexName = `${name}idx`
@@ -142,8 +140,8 @@ const CartProduct = (props: IProps) => {
           <div key={product.id}>
             <AttributeType
               attributeName={product.id}
-              attributeOptions={product.items}
-              selectType={updateCartProductType}
+              attributesOptions={product.items}
+              selectType={updateCartProductOptions}
               productIdx={productIdx}
               overlay={overlay}
             />
