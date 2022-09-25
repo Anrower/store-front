@@ -37,20 +37,20 @@ const CartProduct = (props: IProps) => {
   const updateCartProductOptions = (
     attributeName: string,
     atributeValue?: string,
-    productIndex?: number | null,
+    productIndex?: number,
   ): void => {
 
-    // if (attValue !== null && productIdx !== undefined) {
-    //   const indexName = `${name}idx`
-    //   const obj: ICartProductAttUpd = {
-    //     productIndex: productIdx,
-    //     selectAtt: {
-    //       [name]: attValue,
-    //       [indexName]: idx,
-    //     }
-    //   }
-    //   dispatch(updateProductParam(obj));
-    // }
+    if (atributeValue !== undefined && productIndex !== undefined) {
+      const temp = [...products]
+      const result = (temp[productIndex] = {
+        ...temp[productIdx],
+        selectAtt: {
+          [attributeName]: atributeValue
+        },
+      });
+      temp[productIdx] = result;
+      dispatch(updateProductParam(temp))
+    }
   }
 
   const swipe = (dir: string, gallery: string[], productIdx: number) => {

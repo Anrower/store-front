@@ -38,11 +38,14 @@ export const CartSlice = createSlice({
     updateTotalPrice(state, action: PayloadAction<number>) {
       state.totalPrice = action.payload;
     },
-    updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
-      state.products[action.payload.productIndex].selectAtt = {
-        ...state.products[action.payload.productIndex].selectAtt,
-        ...action.payload.selectAtt
-      };
+    // updateProductParam(state, action: PayloadAction<ICartProductAttUpd>) {
+    //   state.products[action.payload.productIndex].selectAtt = {
+    //     ...state.products[action.payload.productIndex].selectAtt,
+    //     ...action.payload.selectAtt
+    //   };
+    // },
+    updateProductParam(state, action: PayloadAction<ISelectProduct[]>) {
+      state.products = action.payload
     },
     // updateProductPrice(state, action: PayloadAction<ICartProductPriceUpd>) {
     //   state.products[action.payload.productIndex].priceValue =
