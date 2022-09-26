@@ -3,15 +3,11 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
 import {
-  additionTotalPrice,
   decreaseTotalAmount,
   decrementProductAmount,
-  ICartProductAttUpd, ICartProductPriceUpd,
   increaseTotalAmount,
   incrementProductAmount,
-  subtractionTotalPrice,
   updateProductParam,
-  // updateProductPrice,
   updateProducts
 } from '../../../store/reducers/СartSlice';
 import AttributeType from '../../Product/ProductInfo/AttributeType/AttributeType';
@@ -31,8 +27,8 @@ const CartProduct = (props: IProps) => {
   const currentPrice = usePrice(product, currentCurrency);
   const { products } = useAppSelector(state => state.cartReducer);
 
-  const [img, setImage] = useState(['']);
-  const [imgIdx, setImgIdx] = useState(0);
+  const [img, setImage] = useState<string[]>(['']);
+  const [imgIdx, setImgIdx] = useState<number>(0);
 
   const updateCartProductOptions = (
     attributeName: string,
@@ -41,10 +37,12 @@ const CartProduct = (props: IProps) => {
   ): void => {
 
     if (atributeValue !== undefined && productIndex !== undefined) {
+
       const temp = [...products]
       const result = (temp[productIndex] = {
         ...temp[productIdx],
         selectAtt: {
+          ...products[productIdx].selectAtt,
           [attributeName]: atributeValue
         },
       });
@@ -79,38 +77,22 @@ const CartProduct = (props: IProps) => {
     return
   }
 
-  useEffect(() => {
-    if (currentCurrency && currentPrice) {
-      const obj: ICartProductPriceUpd = {
-        productIndex: productIdx,
-        value: currentPrice.amount,
-        symbol: currentCurrency.symbol,
-
-      }
-      // dispatch(updateProductPrice(obj))
-    }
-  }, [currentPrice, currentCurrency, dispatch, productIdx])
-
   const removeProductAmount = (productIdx: number) => {
-    // const productPrice = product.priceValue;
-    if (product.amount === 1) {
-      const result = products.filter((item, index) => {
-        if (index !== productIdx) {
-          return true;
-        }
-      });
-      dispatch(updateProducts(result));
-    } else {
-      dispatch(decrementProductAmount(productIdx));
+    if (currentPrice) {
+      if (product.amount === 1) {
+        const result = products.filter((product, index) => index !== productIdx);
+        dispatch(updateProducts(result));
+      } else {
+        dispatch(decrementProductAmount(productIdx));
+      }
+      dispatch(decreaseTotalAmount());
     }
-    // dispatch(subtractionTotalPrice(productPrice));
-    dispatch(decreaseTotalAmount());
   }
   const addProductAmount = (productIdx: number) => {
-    // const productPrice = product.priceValue;
-    dispatch(increaseTotalAmount());
-    // dispatch(additionTotalPrice(productPrice))
-    dispatch(incrementProductAmount(productIdx));
+    if (currentPrice) {
+      dispatch(increaseTotalAmount());
+      dispatch(incrementProductAmount(productIdx));
+    }
   }
 
   return (

@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import currencyReducer from "./reducers/CurrencySlice";
 import cartReducer from "./reducers/СartSlice";
+import popupReducer from "./reducers/PopupSlice";
 
 const rootReducer = combineReducers({
   currencyReducer,
   cartReducer,
+  popupReducer,
 })
 
 export const store = configureStore({

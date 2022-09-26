@@ -6,6 +6,7 @@ import CartProduct from '../../pages/Cart/CartProduct/CartProduct';
 import { updateTotalPrice } from '../../store/reducers/СartSlice';
 import Button from '../Button/Button';
 import styles from './cartOverlay.module.scss';
+import { togglePopup } from '../../store/reducers/PopupSlice';
 
 const CartOverlay = () => {
   const navigate = useNavigate()
@@ -27,7 +28,8 @@ const CartOverlay = () => {
   // }, [current, totalAmount])
 
   const viewBagHandler = () => {
-    navigate('/cart')
+    dispatch(togglePopup());
+    navigate('/cart');
   }
 
   return (

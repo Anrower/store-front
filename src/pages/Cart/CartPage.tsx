@@ -6,24 +6,32 @@ import { updateTotalPrice } from '../../store/reducers/СartSlice';
 import { useEffect } from 'react';
 import { orderHandler } from '../../helpers/orderHandler';
 
+
 const CartPage = () => {
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
-  const { currentCurrency: current } = useAppSelector(store => store.currencyReducer);
+  const { currentCurrency } = useAppSelector(store => store.currencyReducer);
   const dispatch = useAppDispatch();
 
 
-  // useEffect(() => {
-  //   const prices = products.map((product) => (
-  //     product.amount === 1
-  //       ? product.priceValue
-  //       : product.amount * product.priceValue
-  //   ));
-  //   const newTotalPrice = prices.reduce(
-  //     (previousValue, currentValue) => previousValue + currentValue,
-  //     0
-  //   );
-  //   dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
-  // }, [current, totalAmount, dispatch, products])
+  useEffect(() => {
+    if (currentCurrency && products.length > 0) {
+      const priceLabels = products[0].prices.map((price) => {
+        return price.currency.label;
+      })
+      const findCurrentIndexByLabel = priceLabels.findIndex((label) => label === currentCurrency.label)
+      const AllPricesByCurrentCurrency = products.map((product) => {
+        if (product.amount > 1) {
+          return product.prices[findCurrentIndexByLabel].amount * product.amount;
+        } else {
+          return product.prices[findCurrentIndexByLabel].amount;
+        }
+      })
+      const result = AllPricesByCurrentCurrency.reduce(
+        (previousValue, currentValue) => previousValue + currentValue, 0
+      );
+      dispatch(updateTotalPrice(Math.round(result * 100) / 100))
+    }
+  }, [currentCurrency, totalAmount, dispatch, products])
 
   const getTax = (percent: number) => {
     const result = (Math.round((totalPrice * (percent / 100)) * 100) / 100);
@@ -47,7 +55,7 @@ const CartPage = () => {
           <p className="discont total-item">
             <span className="discont--title">Tax 21%:</span>
             <span className="discont--value">
-              <span>{current?.symbol}</span>
+              <span>{currentCurrency?.symbol}</span>
               {getTax(21)}
             </span>
           </p>
@@ -60,7 +68,7 @@ const CartPage = () => {
               Total:
             </span>
             <span className="total-price--value">
-              {current?.symbol}
+              {currentCurrency?.symbol}
               <span>{totalPrice}</span>
             </span>
 

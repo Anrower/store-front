@@ -1,14 +1,15 @@
+import { useAppSelector } from '../../hooks/redux';
 import styles from './popup.module.scss';
 
 interface Iprops {
   children: JSX.Element,
-  trigger: boolean
 }
 
 const Popup = (props: Iprops) => {
-  const { children, trigger } = props;
+  const { isOpen } = useAppSelector(state => state.popupReducer);
+  const { children } = props;
 
-  return (trigger) ? (
+  return (isOpen) ? (
     <div className={styles.popup} >
       <div className={styles.popup__inner}>
         {children}

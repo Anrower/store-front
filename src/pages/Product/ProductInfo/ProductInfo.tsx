@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useState } from 'react';
 import Btn from '../../../components/Button/Button';
 import AttributeType from './AttributeType/AttributeType';
-import { additionTotalPrice, addToCart } from '../../../store/reducers/СartSlice';
+import { addToCart } from '../../../store/reducers/СartSlice';
 import ProductTitle from './ProductTitle/ProductTitle';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
@@ -22,13 +22,14 @@ const ProductInfo = (props: IProps) => {
   const wideDescription = 370;
   const currentPrice = usePrice(product, currentCurrency);
 
+
+
   const [warning, setWarning] = useState<boolean>(false);
   const [selectProduct, setSelectProduct] = useState<ISelectProduct>({
     ...product,
     selectAtt: {},
     amount: 1,
   })
-  console.log(warning);
 
   function createMarkup() {
     return { __html: product.description };
@@ -42,7 +43,7 @@ const ProductInfo = (props: IProps) => {
     const check = isAllAttributesSelect();
     if (check && currentPrice && product.inStock) {
       dispatch(addToCart(selectProduct));
-      dispatch(additionTotalPrice(currentPrice.amount));
+      // dispatch(additionTotalPrice(currentPrice.amount));
     } else {
       setWarning(true);
     }
@@ -52,13 +53,16 @@ const ProductInfo = (props: IProps) => {
     atributeName: string,
     atributeValue?: string,
   ): void => {
-    setSelectProduct({
-      ...selectProduct,
-      selectAtt: {
-        ...selectProduct.selectAtt,
-        [atributeName]: atributeValue,
-      }
-    })
+
+    if (currentPrice) {
+      setSelectProduct({
+        ...selectProduct,
+        selectAtt: {
+          ...selectProduct.selectAtt,
+          [atributeName]: atributeValue,
+        }
+      })
+    }
   }
 
   return (
