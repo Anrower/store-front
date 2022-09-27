@@ -21,7 +21,7 @@ function App() {
       return;
     }
     dispatch(initCurrencies(data.currencies));
-  }, [data, loading, error])
+  }, [data, loading, error, dispatch])
 
   return (
     <div className="app">
@@ -31,8 +31,8 @@ function App() {
             path="/"
             element={<Navigate to="/all" replace />}
           />
-          <Route path=":categoryId" element={<CategoryPage />} />
-          <Route path=":categoryId/:productId" element={<ProductPage />} />
+          <Route path="/:categoryId" element={<CategoryPage />} />
+          <Route path="/:categoryId/:productId" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
         </Route>
       </Routes>

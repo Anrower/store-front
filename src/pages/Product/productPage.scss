@@ -19,12 +19,21 @@
       display: flex;
       justify-content: center;
 
-      &>img.active {
-        border: 1px solid #5ECE7B;
+      &>div {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        border: 1px solid rgba($color: #fff, $alpha: 0.0);
+        transition: border .4s ease;
+
+        &.active {
+          border: 1px solid #5ECE7B;
+        }
       }
 
-      &>img:hover,
-      &>img:focus {
+      &>div:hover,
+      &>div:focus {
         cursor: pointer;
         border: 1px solid #5ECE7B;
       }

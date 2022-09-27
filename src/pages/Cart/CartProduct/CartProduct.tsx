@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getClassName } from '../../../helpers/getClassName';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
@@ -23,10 +24,9 @@ interface IProps {
 const CartProduct = (props: IProps) => {
   const { product, productIdx, overlay } = props;
   const dispatch = useAppDispatch();
-  const { currentCurrency } = useAppSelector(store => store.currencyReducer)
+  const { currentCurrency } = useAppSelector(store => store.currencyReducer);
   const currentPrice = usePrice(product, currentCurrency);
   const { products } = useAppSelector(state => state.cartReducer);
-
   const [imgIdx, setImgIdx] = useState<number>(0);
 
   const updateCartProductOptions = (
@@ -36,8 +36,7 @@ const CartProduct = (props: IProps) => {
   ): void => {
 
     if (atributeValue !== undefined && productIndex !== undefined) {
-
-      const temp = [...products]
+      const temp = [...products];
       const result = (temp[productIndex] = {
         ...temp[productIdx],
         selectAtt: {
@@ -45,13 +44,15 @@ const CartProduct = (props: IProps) => {
           [attributeName]: atributeValue
         },
       });
+
       temp[productIdx] = result;
-      dispatch(updateProductParam(temp))
+      dispatch(updateProductParam(temp));
     }
   }
 
-  const swipe = (direction: string, gallery: string[]) => {
+  const swipe = (direction: string, gallery: string[]): void => {
     let currentIndex = imgIdx;
+
     if (gallery.length !== 1) {
       if (direction === 'right' && currentIndex + 1 === gallery.length) {
         currentIndex = 0;
@@ -68,10 +69,9 @@ const CartProduct = (props: IProps) => {
       if (direction === 'left') {
         currentIndex -= 1;
       }
-      setImgIdx(currentIndex);
 
+      setImgIdx(currentIndex);
     }
-    return
   }
 
   const removeProductAmount = (productIdx: number) => {
@@ -82,6 +82,7 @@ const CartProduct = (props: IProps) => {
       } else {
         dispatch(decrementProductAmount(productIdx));
       }
+
       dispatch(decreaseTotalAmount());
     }
   }
@@ -94,10 +95,10 @@ const CartProduct = (props: IProps) => {
 
   return (
     <div
-      className={overlay
-        ? `${styles.product_overlay}`
-        : `${styles.product}`
-      }
+      className={getClassName({
+        [styles.product_overlay]: overlay,
+        [styles.product]: !overlay
+      })}
     >
       <div className={overlay ? `${styles.product_inner_overlay}` : undefined}>
         <ProductTitle
@@ -106,10 +107,10 @@ const CartProduct = (props: IProps) => {
           overlay={overlay}
         />
         <p
-          className={overlay
-            ? `${styles.price_overlay}`
-            : `${styles.price}`
-          }
+          className={getClassName({
+            [styles.price_overlay]: overlay,
+            [styles.price]: !overlay
+          })}
         >
           {currentPrice?.currency.symbol}
           <span>{currentPrice?.amount}</span>
@@ -129,38 +130,41 @@ const CartProduct = (props: IProps) => {
       </div>
 
       <div
-        className={overlay
-          ? `${styles.amount_overlay}`
-          : `${styles.amount}`
-        }
+        className={getClassName({
+          [styles.amount_overlay]: overlay,
+          [styles.amount]: !overlay
+        })}
       >
         <div
-          className={overlay
-            ? `${styles.amount__btns_overlay}`
-            : `${styles.amount__btns}`
-          }
+          className={getClassName({
+            [styles.amount__btns_overlay]: overlay,
+            [styles.amount__btns]: !overlay
+          })}
         >
           <button
             onClick={() => removeProductAmount(productIdx)}>
             -
           </button>
+
           <span>{product.amount}</span>
+
           <button
             onClick={() => addProductAmount(productIdx)}>
             +
           </button>
         </div>
+
         <div
-          className={overlay ?
-            `${styles.swiper_overlay}` :
-            `${styles.swiper}`
-          }
+          className={getClassName({
+            [styles.swiper_overlay]: overlay,
+            [styles.swiper]: !overlay
+          })}
         >
           <div
-            className={overlay ?
-              `${styles.swiper_overlay__image__wrapper}` :
-              `${styles.swiper__image__wrapper}`
-            }
+            className={getClassName({
+              [styles.swiper_overlay__image__wrapper]: overlay,
+              [styles.swiper__image__wrapper]: !overlay
+            })}
           >
             <img src={product.gallery[imgIdx]} alt={product.name}></img>
           </div>
@@ -171,6 +175,7 @@ const CartProduct = (props: IProps) => {
                 onClick={() => swipe('left', product.gallery)}>
                 <i className={`${styles.arrow} ${styles.arrow_left}`}></i>
               </button>
+
               <button
                 className={styles.swiper__btn}
                 onClick={() => swipe('right', product.gallery)}>

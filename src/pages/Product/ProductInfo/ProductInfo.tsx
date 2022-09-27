@@ -22,8 +22,6 @@ const ProductInfo = (props: IProps) => {
   const wideDescription = 370;
   const currentPrice = usePrice(product, currentCurrency);
 
-
-
   const [warning, setWarning] = useState<boolean>(false);
   const [selectProduct, setSelectProduct] = useState<ISelectProduct>({
     ...product,
@@ -31,7 +29,7 @@ const ProductInfo = (props: IProps) => {
     amount: 1,
   })
 
-  function createMarkup() {
+  const createMarkup = () => {
     return { __html: product.description };
   }
 
@@ -43,7 +41,6 @@ const ProductInfo = (props: IProps) => {
     const check = isAllAttributesSelect();
     if (check && currentPrice && product.inStock) {
       dispatch(addToCart(selectProduct));
-      // dispatch(additionTotalPrice(currentPrice.amount));
     } else {
       setWarning(true);
     }

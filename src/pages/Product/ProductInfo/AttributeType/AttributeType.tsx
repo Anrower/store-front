@@ -39,7 +39,6 @@ const AttributeType = (props: IProps) => {
     return index;
   }
 
-
   useEffect(() => {
     if (warning && setWarning) {
       let timer = setTimeout(() => setWarning(false), 1200)
@@ -48,7 +47,6 @@ const AttributeType = (props: IProps) => {
       }
     }
   }, [warning, setWarning, selectAttribute])
-
 
   useEffect(() => {
     if (productIdx !== null) {
@@ -83,6 +81,7 @@ const AttributeType = (props: IProps) => {
       >
         {attributeName}:
       </p>
+
       <div
         className={overlay
           ? "attributes-type_overlay"
@@ -101,17 +100,7 @@ const AttributeType = (props: IProps) => {
             key={attribute.value}
             style={attributeName === 'Color' ? {
               background: attribute.value,
-              filter: 'grayscale(40%)'
             } : undefined}
-            // className={overlay
-            //   ? (idx === selectAttribute ?
-            //     `attributes-type_overlay-item ${attributeName} active` :
-            //     `attributes-type_overlay-item ${attributeName}`)
-            //   :
-            //   (idx === selectAttribute ?
-            //     `attributes-type-item ${attributeName} active` :
-            //     `attributes-type-item ${attributeName}`)
-            // }
             onClick={() => handleClick(attributeName, attribute.value, productIdx,)}
           >
             {attributeName !== "Color" ? attribute.value : null}

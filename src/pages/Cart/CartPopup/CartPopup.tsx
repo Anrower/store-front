@@ -1,11 +1,11 @@
 import { useAppSelector } from '../../../hooks/redux';
-import styles from './popup.module.scss';
+import styles from './cartPopup.module.scss';
 
 interface Iprops {
   children: JSX.Element,
 }
 
-const Popup = (props: Iprops) => {
+const CartPopup = (props: Iprops) => {
   const { overlayIsOpen } = useAppSelector(state => state.cartReducer);
   const { children } = props;
 
@@ -18,4 +18,4 @@ const Popup = (props: Iprops) => {
   ) : null;
 }
 
-export default Popup
+export default CartPopup;

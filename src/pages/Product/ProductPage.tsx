@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { IProductData } from '../../models/IProductData';
 import ProductInfo from './ProductInfo/ProductInfo';
 import { useState } from 'react';
+import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -25,25 +27,29 @@ const ProductPage = () => {
 
   return (
     (loading && called) ?
-      <p>loading...</p> :
-      (data) ?
+      <Loader /> :
+      (error || !data) ?
+        <ErrorMessage message={error?.message} /> :
         <div className="product">
           <div className="product__content">
             <aside className="product__aside">
               <div className="product__aside__image-wrapper">
-                {data.product.gallery.map((value, idx) => (
-                  <img key={value}
-                    className={idx === asidePicture ? 'active' : undefined}
-                    src={value}
-                    alt="product"
-                    onClick={() => { setAsidePicture(idx) }} />
+                {data.product.gallery.map((image, index) => (
+                  <div
+                    key={index}
+                    className={index === asidePicture ? 'active' : undefined}>
+                    <img
+                      src={image}
+                      alt="product"
+                      onClick={() => { setAsidePicture(index) }}
+                    />
+                  </div>
                 ))}
               </div>
             </aside>
             <ProductInfo product={data.product} asidePicture={asidePicture} />
           </div>
-        </div> :
-        <p>{error?.message}</p>
+        </div>
   )
 }
 
