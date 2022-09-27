@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 import styles from './popup.module.scss';
 
 interface Iprops {
@@ -6,10 +6,10 @@ interface Iprops {
 }
 
 const Popup = (props: Iprops) => {
-  const { isOpen } = useAppSelector(state => state.popupReducer);
+  const { overlayIsOpen } = useAppSelector(state => state.cartReducer);
   const { children } = props;
 
-  return (isOpen) ? (
+  return (overlayIsOpen) ? (
     <div className={styles.popup} >
       <div className={styles.popup__inner}>
         {children}

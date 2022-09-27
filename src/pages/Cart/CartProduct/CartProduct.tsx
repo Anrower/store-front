@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { usePrice } from '../../../hooks/usePrice';
 import { ISelectProduct } from '../../../models/ISelectProduct';
@@ -27,7 +27,6 @@ const CartProduct = (props: IProps) => {
   const currentPrice = usePrice(product, currentCurrency);
   const { products } = useAppSelector(state => state.cartReducer);
 
-  const [img, setImage] = useState<string[]>(['']);
   const [imgIdx, setImgIdx] = useState<number>(0);
 
   const updateCartProductOptions = (
@@ -51,24 +50,22 @@ const CartProduct = (props: IProps) => {
     }
   }
 
-  const swipe = (dir: string, gallery: string[], productIdx: number) => {
+  const swipe = (direction: string, gallery: string[]) => {
     let currentIndex = imgIdx;
     if (gallery.length !== 1) {
-      setImage(gallery);
-
-      if (dir === 'right' && currentIndex + 1 === gallery.length) {
+      if (direction === 'right' && currentIndex + 1 === gallery.length) {
         currentIndex = 0;
       }
 
-      if ((dir === 'left') && currentIndex === 0) {
+      if ((direction === 'left') && currentIndex === 0) {
         currentIndex = gallery.length - 1;
       }
 
-      if (dir === 'right') {
+      if (direction === 'right') {
         currentIndex += 1;
 
       }
-      if (dir === 'left') {
+      if (direction === 'left') {
         currentIndex -= 1;
       }
       setImgIdx(currentIndex);
@@ -171,12 +168,12 @@ const CartProduct = (props: IProps) => {
             <div className={styles.swiper__btn__wrapper}>
               <button
                 className={styles.swiper__btn}
-                onClick={() => swipe('left', product.gallery, productIdx)}>
+                onClick={() => swipe('left', product.gallery)}>
                 <i className={`${styles.arrow} ${styles.arrow_left}`}></i>
               </button>
               <button
                 className={styles.swiper__btn}
-                onClick={() => swipe('right', product.gallery, productIdx)}>
+                onClick={() => swipe('right', product.gallery)}>
                 <i className={`${styles.arrow} ${styles.arrow_right}`}></i>
               </button>
             </div> : null

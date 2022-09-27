@@ -7,6 +7,7 @@ interface ICartState {
   totalAmount: number
   totalPrice: number
   currencySymbol: ICurrencySymbol
+  overlayIsOpen: boolean
   allTotalPrice: {
     [key: string]: number;
   }
@@ -24,6 +25,7 @@ export interface ICartProductPriceUpd {
 }
 
 const initialState: ICartState = {
+  overlayIsOpen: false,
   products: [],
   totalAmount: 0,
   totalPrice: 0,
@@ -62,6 +64,9 @@ export const CartSlice = createSlice({
     decreaseTotalAmount(state) {
       state.totalAmount--;
     },
+    toggleOverlay(state) {
+      state.overlayIsOpen = !state.overlayIsOpen;
+    },
   }
 });
 
@@ -75,4 +80,5 @@ export const {
   decreaseTotalAmount,
   decrementProductAmount,
   incrementProductAmount,
+  toggleOverlay,
 } = CartSlice.actions;

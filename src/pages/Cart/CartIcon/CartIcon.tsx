@@ -1,10 +1,10 @@
 import './cartIcon.scss'
-import cart_img from '../../images/cart.svg';
-import { useAppSelector } from '../../hooks/redux';
-import Popup from '../Popup/Popup';
+import cart_img from '../../../images/cart.svg';
+import { useAppSelector } from '../../../hooks/redux';
+import Popup from '../CartPopup/Popup';
 import CartOverlay from '../CartOverlay/CartOverlay';
 import { useDispatch } from 'react-redux';
-import { togglePopup } from '../../store/reducers/PopupSlice';
+import { toggleOverlay } from '../../../store/reducers/СartSlice';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const Cart = () => {
     <>
       <div
         className="cart"
-        onClick={() => dispatch(togglePopup())}
+        onClick={() => dispatch(toggleOverlay())}
       >
         {totalAmount <= 0 ? null :
           <div className="cart__count">{totalAmount}</div>

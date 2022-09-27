@@ -1,6 +1,6 @@
 import './header.scss';
 import logo from '../../images/logo.svg'
-import CartIcon from '../CartIcon/CartIcon';
+import CartIcon from '../../pages/Cart/CartIcon/CartIcon';
 import CurrencyFilter from '../CurrencyFilter/CurrencyFilter';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';

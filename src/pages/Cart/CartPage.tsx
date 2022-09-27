@@ -30,6 +30,8 @@ const CartPage = () => {
         (previousValue, currentValue) => previousValue + currentValue, 0
       );
       dispatch(updateTotalPrice(Math.round(result * 100) / 100))
+    } else {
+      dispatch(updateTotalPrice(0))
     }
   }, [currentCurrency, totalAmount, dispatch, products])
 

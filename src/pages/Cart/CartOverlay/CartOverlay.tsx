@@ -1,34 +1,42 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { orderHandler } from '../../helpers/orderHandler';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import CartProduct from '../../pages/Cart/CartProduct/CartProduct';
-import { updateTotalPrice } from '../../store/reducers/СartSlice';
-import Button from '../Button/Button';
+import { orderHandler } from '../../../helpers/orderHandler';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import CartProduct from '../CartProduct/CartProduct';
+import { updateTotalPrice, toggleOverlay } from '../../../store/reducers/СartSlice';
+import Button from '../../../components/Button/Button';
 import styles from './cartOverlay.module.scss';
-import { togglePopup } from '../../store/reducers/PopupSlice';
 
 const CartOverlay = () => {
   const navigate = useNavigate()
   const { products, totalAmount, totalPrice } = useAppSelector(state => state.cartReducer)
-  const { currentCurrency: current } = useAppSelector(store => store.currencyReducer);
+  const { currentCurrency } = useAppSelector(store => store.currencyReducer);
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   const prices = products.map((product) => (
-  //     product.amount === 1
-  //       ? product.priceValue
-  //       : product.amount * product.priceValue
-  //   ));
-  //   const newTotalPrice = prices.reduce(
-  //     (previousValue, currentValue) => previousValue + currentValue,
-  //     0
-  //   );
-  //   dispatch(updateTotalPrice(Math.round(newTotalPrice * 100) / 100))
-  // }, [current, totalAmount])
+  useEffect(() => {
+    if (currentCurrency && products.length > 0) {
+      const priceLabels = products[0].prices.map((price) => {
+        return price.currency.label;
+      })
+      const findCurrentIndexByLabel = priceLabels.findIndex((label) => label === currentCurrency.label)
+      const AllPricesByCurrentCurrency = products.map((product) => {
+        if (product.amount > 1) {
+          return product.prices[findCurrentIndexByLabel].amount * product.amount;
+        } else {
+          return product.prices[findCurrentIndexByLabel].amount;
+        }
+      })
+      const result = AllPricesByCurrentCurrency.reduce(
+        (previousValue, currentValue) => previousValue + currentValue, 0
+      );
+      dispatch(updateTotalPrice(Math.round(result * 100) / 100))
+    } else {
+      dispatch(updateTotalPrice(0))
+    }
+  }, [currentCurrency, totalAmount, dispatch, products])
 
   const viewBagHandler = () => {
-    dispatch(togglePopup());
+    dispatch(toggleOverlay());
     navigate('/cart');
   }
 
@@ -45,10 +53,10 @@ const CartOverlay = () => {
            ${styles.cart__overlay_products_scroll}` :
           `${styles.cart__overlay_products}`
         }>
-        {products.map((i, productIndex) => (
+        {products.map((product, productIndex) => (
           <CartProduct
             key={productIndex}
-            product={i}
+            product={product}
             productIdx={productIndex}
             overlay={true}
           />
@@ -57,7 +65,7 @@ const CartOverlay = () => {
       <div className={styles.cart__overlay_total}>
         <span className={styles.cart__overlay_total_title}>Total</span>
         <span className={styles.cart__overlay_total_price}>
-          {current?.symbol}
+          {currentCurrency?.symbol}
           <span>{totalPrice}</span>
         </span>
       </div>
